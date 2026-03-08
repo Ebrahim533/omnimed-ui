@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, Activity, Smartphone, Users, TrendingUp, Clock } from "lucide-react";
+import { ArrowRight, Shield, Activity, Smartphone, Users, TrendingUp, Clock, Linkedin } from "lucide-react";
 import Layout from "@/components/Layout";
 import heroBg from "@/assets/hero-bg.jpg";
+import ceoPortrait from "@/assets/ceo-portrait.jpg";
+import ceoSignature from "@/assets/ceo-signature.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -152,6 +154,84 @@ const Index = () => (
               </Link>
             </motion.div>
           ))}
+        </div>
+      </div>
+    </section>
+
+    {/* Founder Vision Banner */}
+    <section className="py-20 lg:py-28 surface-tint">
+      <div className="section-container">
+        <div className="grid lg:grid-cols-5 gap-10 lg:gap-16 items-center">
+          {/* Side A — Portrait */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const }}
+            className="lg:col-span-2"
+          >
+            <div className="relative rounded-2xl overflow-hidden aspect-[3/4] max-w-sm mx-auto lg:mx-0">
+              <img
+                src={ceoPortrait}
+                alt="Dr. James Mitchell, CEO & Founder of OmniMed"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
+            </div>
+          </motion.div>
+
+          {/* Side B — Vision Statement */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] as const }}
+            className="lg:col-span-3 space-y-6"
+          >
+            <p className="text-primary font-display font-semibold text-sm tracking-wider uppercase">
+              A Message from Our Founder
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground leading-tight">
+              Leading the Future of{" "}
+              <span className="gradient-text">Proactive Care</span>
+            </h2>
+            <blockquote className="text-lg sm:text-xl text-muted-foreground leading-relaxed border-l-4 border-secondary pl-6 italic">
+              "We aren't just managing health — we're predicting a better quality of life. Every patient deserves care that anticipates their needs, not one that merely reacts to crises."
+            </blockquote>
+            <p className="text-muted-foreground leading-relaxed">
+              At OmniMed, we've built a platform where technology and compassion converge. Our mission is to shift healthcare from reactive to proactive — empowering providers with real-time insights and patients with peace of mind.
+            </p>
+
+            {/* Signature & Name */}
+            <div className="pt-4 space-y-3">
+              <motion.img
+                src={ceoSignature}
+                alt="Dr. James Mitchell's signature"
+                className="h-12 w-auto opacity-80"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 0.8, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, duration: 0.5, type: "spring", stiffness: 150 }}
+                loading="lazy"
+              />
+              <div className="flex items-center gap-3">
+                <div>
+                  <p className="font-display font-bold text-foreground">Dr. James Mitchell</p>
+                  <p className="text-sm text-muted-foreground">CEO & Founder, OmniMed</p>
+                </div>
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center hover:bg-primary/20 transition-colors"
+                  aria-label="Dr. James Mitchell's LinkedIn profile"
+                >
+                  <Linkedin size={15} className="text-primary" />
+                </a>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
