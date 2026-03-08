@@ -1,19 +1,26 @@
 import { motion } from "framer-motion";
 import { buttonHover, buttonTap } from "@/lib/animations";
-import { Button, type ButtonProps } from "@/components/ui/button";
-import { forwardRef } from "react";
 
-const MotionButtonInner = motion.create(Button);
+interface MotionButtonProps {
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+  size?: "default" | "sm" | "lg" | "icon";
+  asChild?: boolean;
+}
 
-const MotionButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => (
-  <MotionButtonInner
-    ref={ref}
+const MotionButton = ({ children, className, ...props }: MotionButtonProps) => (
+  <motion.button
     whileHover={buttonHover}
     whileTap={buttonTap}
+    className={className}
     {...props}
-  />
-));
-
-MotionButton.displayName = "MotionButton";
+  >
+    {children}
+  </motion.button>
+);
 
 export default MotionButton;
