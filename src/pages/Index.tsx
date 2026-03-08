@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, Activity, Smartphone, Users, TrendingUp, Clock } from "lucide-react";
+import { ArrowRight, Shield, Activity, Smartphone, Users, TrendingUp, Clock, Linkedin } from "lucide-react";
 import Layout from "@/components/Layout";
 import heroBg from "@/assets/hero-bg.jpg";
+import ceoPortrait from "@/assets/ceo-portrait.jpg";
+import ceoSignature from "@/assets/ceo-signature.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
