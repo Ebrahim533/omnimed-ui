@@ -1,14 +1,7 @@
 import { motion } from "framer-motion";
 import Layout from "@/components/Layout";
 import { Heart, Cpu, Users, Target } from "lucide-react";
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (i: number) => ({
-    opacity: 1, y: 0,
-    transition: { delay: i * 0.1, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  }),
-};
+import { fadeUp, sectionReveal, cardStagger, viewportOnce } from "@/lib/animations";
 
 const values = [
   { icon: Heart, title: "Patient-Centered", desc: "Every decision starts with what's best for the patient." },
@@ -23,9 +16,7 @@ const About = () => (
       <div className="section-container">
         <motion.div initial="hidden" animate="visible" className="max-w-3xl mx-auto text-center mb-16">
           <motion.p custom={0} variants={fadeUp} className="text-primary font-display font-semibold text-sm tracking-wider uppercase mb-3">About OmniMed</motion.p>
-          <motion.h1 custom={1} variants={fadeUp} className="text-4xl sm:text-5xl font-display font-bold text-foreground mb-6">
-            Redefining Care Through Technology
-          </motion.h1>
+          <motion.h1 custom={1} variants={fadeUp} className="text-4xl sm:text-5xl font-display font-bold text-foreground mb-6">Redefining Care Through Technology</motion.h1>
           <motion.p custom={2} variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed">
             OmniMed was founded on a simple belief: healthcare should be proactive, not reactive. By integrating advanced monitoring, data analytics, and compassionate care coordination, we empower providers to deliver better outcomes for every patient.
           </motion.p>
@@ -35,10 +26,12 @@ const About = () => (
           {values.map((v, i) => (
             <motion.div
               key={v.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
+              custom={i}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOnce}
+              variants={cardStagger}
+              whileHover={{ y: -4, transition: { duration: 0.3 } }}
               className="card-elevated p-8"
             >
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
@@ -50,12 +43,7 @@ const About = () => (
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-3xl mx-auto"
-        >
+        <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionReveal} className="max-w-3xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground mb-6 text-center">Our Mission</h2>
           <div className="card-elevated p-8 lg:p-10">
             <p className="text-muted-foreground leading-relaxed mb-4">

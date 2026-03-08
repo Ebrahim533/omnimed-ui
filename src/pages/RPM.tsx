@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2, Smartphone, Wifi, BarChart3, Bell } from "lucide-react";
+import { ArrowRight, CheckCircle2, Wifi, Bell, BarChart3 } from "lucide-react";
+import { fadeUp, sectionReveal, cardStagger, slideInLeft, slideInRight, viewportOnce, buttonHover, buttonTap } from "@/lib/animations";
 
 const features = [
   "Real-time vitals monitoring via wearable devices",
@@ -13,26 +14,30 @@ const features = [
   "Clinical dashboard for provider oversight",
 ];
 
+const highlights = [
+  { icon: Wifi, title: "Connected Devices", desc: "Compatible with leading health wearables for blood pressure, glucose, SpO2, and more." },
+  { icon: Bell, title: "Smart Alerts", desc: "Automated notifications when readings fall outside personalized thresholds." },
+  { icon: BarChart3, title: "Analytics Dashboard", desc: "Comprehensive clinical insights with trend analysis and population health views." },
+];
+
 const RPMPage = () => (
   <Layout>
     <section className="py-20 lg:py-28">
       <div className="section-container">
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl mb-14">
-          <p className="text-primary font-display font-semibold text-sm tracking-wider uppercase mb-3">Remote Patient Monitoring</p>
-          <h1 className="text-4xl sm:text-5xl font-display font-bold text-foreground mb-6">
-            Real-Time Data, Real-Time Care
-          </h1>
-          <p className="text-lg text-muted-foreground leading-relaxed">
+        <motion.div initial="hidden" animate="visible" className="max-w-3xl mb-14">
+          <motion.p custom={0} variants={fadeUp} className="text-primary font-display font-semibold text-sm tracking-wider uppercase mb-3">Remote Patient Monitoring</motion.p>
+          <motion.h1 custom={1} variants={fadeUp} className="text-4xl sm:text-5xl font-display font-bold text-foreground mb-6">Real-Time Data, Real-Time Care</motion.h1>
+          <motion.p custom={2} variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed">
             Our RPM platform connects patients to their care team through wearable devices and smart sensors, enabling continuous health monitoring and proactive intervention from anywhere.
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 mb-20">
-          <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+          <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={slideInLeft}>
             <h2 className="text-2xl font-display font-bold text-foreground mb-6">Platform Features</h2>
             <div className="space-y-4">
               {features.map((f, i) => (
-                <motion.div key={f} initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="flex items-start gap-3">
+                <motion.div key={f} custom={i} initial="hidden" whileInView="visible" viewport={viewportOnce} variants={cardStagger} className="flex items-start gap-3">
                   <CheckCircle2 className="text-secondary mt-0.5 shrink-0" size={20} />
                   <span className="text-foreground">{f}</span>
                 </motion.div>
@@ -40,13 +45,18 @@ const RPMPage = () => (
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-6">
-            {[
-              { icon: Wifi, title: "Connected Devices", desc: "Compatible with leading health wearables for blood pressure, glucose, SpO2, and more." },
-              { icon: Bell, title: "Smart Alerts", desc: "Automated notifications when readings fall outside personalized thresholds." },
-              { icon: BarChart3, title: "Analytics Dashboard", desc: "Comprehensive clinical insights with trend analysis and population health views." },
-            ].map((item) => (
-              <div key={item.title} className="card-elevated p-6 flex gap-4">
+          <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={slideInRight} className="space-y-6">
+            {highlights.map((item, i) => (
+              <motion.div
+                key={item.title}
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOnce}
+                variants={cardStagger}
+                whileHover={{ y: -4, transition: { duration: 0.3 } }}
+                className="card-elevated p-6 flex gap-4"
+              >
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                   <item.icon className="text-primary" size={20} />
                 </div>
@@ -54,15 +64,17 @@ const RPMPage = () => (
                   <h3 className="font-display font-semibold text-foreground mb-1">{item.title}</h3>
                   <p className="text-sm text-muted-foreground">{item.desc}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
         </div>
 
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center">
-          <Button asChild size="lg" className="rounded-full px-8">
-            <Link to="/appointment">Explore RPM <ArrowRight size={16} className="ml-1" /></Link>
-          </Button>
+        <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionReveal} className="text-center">
+          <motion.div whileHover={buttonHover} whileTap={buttonTap} className="inline-block">
+            <Button asChild size="lg" className="rounded-full px-8">
+              <Link to="/appointment">Explore RPM <ArrowRight size={16} className="ml-1" /></Link>
+            </Button>
+          </motion.div>
         </motion.div>
       </div>
     </section>
