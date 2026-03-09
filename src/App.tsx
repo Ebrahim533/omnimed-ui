@@ -11,6 +11,7 @@ import CCMPage from "./pages/CCM";
 import RPMPage from "./pages/RPM";
 import Contact from "./pages/Contact";
 import Appointment from "./pages/Appointment";
+import Partner from "./pages/Partner";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
