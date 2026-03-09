@@ -79,7 +79,7 @@ const ServicePageLayout = ({
             >
               <div className="bg-primary-foreground/10 backdrop-blur-xl rounded-2xl border border-primary-foreground/20 p-8 shadow-2xl">
                 <div className="flex items-center gap-2 mb-6">
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse" />
                   <span className="text-sm font-medium text-primary-foreground/70">Patient Monitoring — Live</span>
                 </div>
                 <div className="grid grid-cols-2 gap-6">
