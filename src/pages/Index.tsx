@@ -1,33 +1,13 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, Activity, Smartphone, Users, TrendingUp, Clock, Linkedin } from "lucide-react";
+import { ArrowRight, Users, TrendingUp, Clock, Shield, Linkedin } from "lucide-react";
 import Layout from "@/components/Layout";
+import ServiceTrilogy from "@/components/ServiceTrilogy";
 import { fadeUp, sectionReveal, cardStagger, scaleIn, slideInLeft, slideInRight, viewportOnce, buttonHover, buttonTap } from "@/lib/animations";
 import heroBg from "@/assets/hero-bg.jpg";
 import ceoPortrait from "@/assets/ceo-portrait.jpg";
 import ceoSignature from "@/assets/ceo-signature.png";
-
-const services = [
-  {
-    icon: Shield,
-    title: "Principal Care Management",
-    desc: "Specialist-led care coordination for patients with complex conditions requiring focused attention.",
-    href: "/services/pcm",
-  },
-  {
-    icon: Activity,
-    title: "Chronic Care Management",
-    desc: "Comprehensive, ongoing management for patients with two or more chronic conditions.",
-    href: "/services/ccm",
-  },
-  {
-    icon: Smartphone,
-    title: "Remote Patient Monitoring",
-    desc: "Real-time health data from wearable devices, enabling proactive clinical decisions.",
-    href: "/services/rpm",
-  },
-];
 
 const stats = [
   { icon: Users, value: "10,000+", label: "Patients Managed" },
@@ -94,43 +74,7 @@ const Index = () => (
       </div>
     </section>
 
-    {/* Services */}
-    <section className="py-20 lg:py-28">
-      <div className="section-container">
-        <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionReveal} className="text-center max-w-2xl mx-auto mb-14">
-          <p className="text-primary font-display font-semibold text-sm tracking-wider uppercase mb-3">Our Services</p>
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground mb-4">Comprehensive Care Solutions</h2>
-          <p className="text-muted-foreground leading-relaxed">
-            From specialist-led care to real-time remote monitoring, our integrated services cover every aspect of modern patient care.
-          </p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-          {services.map((service, i) => (
-            <motion.div
-              key={service.title}
-              custom={i}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewportOnce}
-              variants={cardStagger}
-              whileHover={{ y: -6, transition: { duration: 0.3 } }}
-            >
-              <Link to={service.href} className="block card-elevated p-8 h-full group">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/15 transition-colors">
-                  <service.icon className="text-primary" size={24} />
-                </div>
-                <h3 className="font-display font-semibold text-lg text-foreground mb-3">{service.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-4">{service.desc}</p>
-                <span className="inline-flex items-center text-sm font-medium text-primary group-hover:gap-2 gap-1 transition-all">
-                  Learn more <ArrowRight size={14} />
-                </span>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <ServiceTrilogy />
 
     {/* Founder Vision Banner */}
     <section className="py-20 lg:py-28 surface-tint">
