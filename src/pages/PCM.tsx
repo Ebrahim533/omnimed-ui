@@ -1,84 +1,33 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import Layout from "@/components/Layout";
-import { Button } from "@/components/ui/button";
-import { Shield, ArrowRight, CheckCircle2, Stethoscope, ClipboardList, HeartPulse } from "lucide-react";
-import { fadeUp, sectionReveal, cardStagger, slideInLeft, slideInRight, viewportOnce, buttonHover, buttonTap } from "@/lib/animations";
-
-const features = [
-  "Specialist-led comprehensive care plans",
-  "Longitudinal management for complex conditions",
-  "Care coordination across multiple providers",
-  "Monthly patient wellness check-ins",
-  "Medication management and reconciliation",
-  "24/7 access to care team resources",
-];
-
-const highlights = [
-  { icon: Stethoscope, title: "Dedicated Specialist", desc: "Each patient is assigned a specialist who oversees their complete care journey." },
-  { icon: ClipboardList, title: "Personalized Care Plans", desc: "Evidence-based plans tailored to each patient's unique condition and goals." },
-  { icon: HeartPulse, title: "Continuous Monitoring", desc: "Regular assessments ensure early detection of any changes in condition." },
-];
+import ServicePageLayout from "@/components/ServicePageLayout";
 
 const PCMPage = () => (
-  <Layout>
-    <section className="py-20 lg:py-28">
-      <div className="section-container">
-        <motion.div initial="hidden" animate="visible" className="max-w-3xl mb-14">
-          <motion.p custom={0} variants={fadeUp} className="text-primary font-display font-semibold text-sm tracking-wider uppercase mb-3">Principal Care Management</motion.p>
-          <motion.h1 custom={1} variants={fadeUp} className="text-4xl sm:text-5xl font-display font-bold text-foreground mb-6">Specialist-Led Care for Complex Patients</motion.h1>
-          <motion.p custom={2} variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed">
-            Our Principal Care Management program provides focused, specialist-led coordination for patients with a single high-risk chronic condition, ensuring they receive the dedicated attention their health demands.
-          </motion.p>
-        </motion.div>
-
-        <div className="grid lg:grid-cols-2 gap-12 mb-20">
-          <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={slideInLeft}>
-            <h2 className="text-2xl font-display font-bold text-foreground mb-6">What's Included</h2>
-            <div className="space-y-4">
-              {features.map((f, i) => (
-                <motion.div key={f} custom={i} initial="hidden" whileInView="visible" viewport={viewportOnce} variants={cardStagger} className="flex items-start gap-3">
-                  <CheckCircle2 className="text-secondary mt-0.5 shrink-0" size={20} />
-                  <span className="text-foreground">{f}</span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={slideInRight} className="space-y-6">
-            {highlights.map((item, i) => (
-              <motion.div
-                key={item.title}
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={viewportOnce}
-                variants={cardStagger}
-                whileHover={{ y: -4, transition: { duration: 0.3 } }}
-                className="card-elevated p-6 flex gap-4"
-              >
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <item.icon className="text-primary" size={20} />
-                </div>
-                <div>
-                  <h3 className="font-display font-semibold text-foreground mb-1">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-
-        <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionReveal} className="text-center">
-          <motion.div whileHover={buttonHover} whileTap={buttonTap} className="inline-block">
-            <Button asChild size="lg" className="rounded-full px-8">
-              <Link to="/appointment">Get Started with PCM <ArrowRight size={16} className="ml-1" /></Link>
-            </Button>
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
-  </Layout>
+  <ServicePageLayout
+    label="Principal Care Management"
+    headline="Specialist-Led Care for Complex Patients"
+    subheadline="Our Principal Care Management program provides focused, specialist-led coordination for patients with a single high-risk chronic condition, ensuring they receive the dedicated attention their health demands."
+    heroStats={[
+      { value: "98%", label: "Patient Satisfaction" },
+      { value: "42%", label: "Fewer ER Visits" },
+      { value: "24/7", label: "Care Team Access" },
+      { value: "100%", label: "HIPAA Compliant" },
+    ]}
+    supportItems={[
+      { title: "Full Program Setup", description: "End-to-end workflow design tailored to your practice's unique patient population and specialties." },
+      { title: "Patient Enrollment & Onboarding", description: "Streamlined enrollment with patient education materials and consent management." },
+      { title: "Clinical Monitoring & Coordination", description: "Specialist-led oversight with real-time health data tracking and multi-provider coordination." },
+      { title: "Documentation & Billing Compliance", description: "Automated CPT code capture and audit-ready documentation for every patient encounter." },
+      { title: "Monthly Reporting & Insights", description: "Comprehensive performance dashboards with patient outcomes, revenue metrics, and trend analysis." },
+      { title: "Medication Reconciliation", description: "Thorough medication reviews to prevent adverse interactions and ensure treatment adherence." },
+    ]}
+    includedItems={[
+      { title: "Specialist-Led Comprehensive Care Plans", content: "Each patient receives an evidence-based care plan developed by a specialist who oversees their complete care journey, with regular reassessments and goal tracking." },
+      { title: "24/7 Access to Care Team Resources", content: "Patients and providers have round-the-clock access to clinical support, educational materials, and emergency protocols through our secure platform." },
+      { title: "Medication Management & Reconciliation", content: "Regular medication reviews ensure safety, reduce polypharmacy risks, and maintain alignment between all treating providers." },
+      { title: "Longitudinal Condition Management", content: "Continuous tracking and management of the patient's primary chronic condition with regular wellness check-ins and proactive intervention." },
+      { title: "Care Coordination Across Providers", content: "Seamless communication between specialists, PCPs, and ancillary care teams to eliminate gaps in the patient's treatment journey." },
+    ]}
+    ctaLabel="Get Started with PCM"
+  />
 );
 
 export default PCMPage;
