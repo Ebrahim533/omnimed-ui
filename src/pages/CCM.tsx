@@ -5,6 +5,7 @@ const CCMPage = () => (
     label="Chronic Care Management"
     headline="Long-Term Health Stability for Complex Patients"
     subheadline="Our CCM program provides ongoing, coordinated care for patients managing multiple chronic conditions — reducing hospitalizations, improving adherence, and elevating quality of life."
+    heroImage="https://images.pexels.com/photos/4173251/pexels-photo-4173251.jpeg"
     heroStats={[
       { value: "35%", label: "Reduced Readmissions" },
       { value: "2M+", label: "Care Minutes Logged" },

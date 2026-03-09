@@ -5,6 +5,7 @@ const PCMPage = () => (
     label="Principal Care Management"
     headline="Specialist-Led Care for Complex Patients"
     subheadline="Our Principal Care Management program provides focused, specialist-led coordination for patients with a single high-risk chronic condition, ensuring they receive the dedicated attention their health demands."
+    heroImage="https://images.pexels.com/photos/7659564/pexels-photo-7659564.jpeg"
     heroStats={[
       { value: "98%", label: "Patient Satisfaction" },
       { value: "42%", label: "Fewer ER Visits" },

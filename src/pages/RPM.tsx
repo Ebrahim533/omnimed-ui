@@ -5,6 +5,7 @@ const RPMPage = () => (
     label="Remote Patient Monitoring"
     headline="Enhance Patient Outcomes with Real-Time RPM"
     subheadline="Our RPM platform connects patients to their care team through wearable devices and smart sensors, enabling continuous health monitoring and proactive intervention from anywhere."
+    heroImage="https://images.pexels.com/photos/8413183/pexels-photo-8413183.jpeg"
     heroStats={[
       { value: "15K+", label: "Devices Connected" },
       { value: "< 3s", label: "Alert Response" },

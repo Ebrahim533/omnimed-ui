@@ -17,6 +17,7 @@ interface ServicePageProps {
   supportItems: { title: string; description: string }[];
   includedItems: { title: string; content: string }[];
   ctaLabel: string;
+  heroImage?: string;
 }
 
 /* ─── Why Partner Pillars (shared) ─── */
@@ -36,13 +37,17 @@ const ServicePageLayout = ({
   supportItems,
   includedItems,
   ctaLabel,
+  heroImage,
 }: ServicePageProps) => {
   return (
     <Layout>
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/90 to-secondary text-primary-foreground py-24 lg:py-32">
-        {/* Background pattern */}
-        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)", backgroundSize: "40px 40px" }} />
+      <section className="relative overflow-hidden text-primary-foreground py-24 lg:py-32" style={heroImage ? { backgroundImage: `url(${heroImage})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>
+        {/* Background gradient overlay */}
+        <div className={`absolute inset-0 ${heroImage ? "bg-black/50" : "bg-gradient-to-br from-primary via-primary/90 to-secondary"}`} />
+        
+        {/* Background pattern (only for non-image backgrounds) */}
+        {!heroImage && <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)", backgroundSize: "40px 40px" }} />}
 
         <div className="section-container relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
