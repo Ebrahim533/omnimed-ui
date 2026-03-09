@@ -1,33 +1,13 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, Activity, Smartphone, Users, TrendingUp, Clock, Linkedin } from "lucide-react";
+import { ArrowRight, Users, TrendingUp, Clock, Shield, Linkedin } from "lucide-react";
 import Layout from "@/components/Layout";
+import ServiceTrilogy from "@/components/ServiceTrilogy";
 import { fadeUp, sectionReveal, cardStagger, scaleIn, slideInLeft, slideInRight, viewportOnce, buttonHover, buttonTap } from "@/lib/animations";
 import heroBg from "@/assets/hero-bg.jpg";
 import ceoPortrait from "@/assets/ceo-portrait.jpg";
 import ceoSignature from "@/assets/ceo-signature.png";
-
-const services = [
-  {
-    icon: Shield,
-    title: "Principal Care Management",
-    desc: "Specialist-led care coordination for patients with complex conditions requiring focused attention.",
-    href: "/services/pcm",
-  },
-  {
-    icon: Activity,
-    title: "Chronic Care Management",
-    desc: "Comprehensive, ongoing management for patients with two or more chronic conditions.",
-    href: "/services/ccm",
-  },
-  {
-    icon: Smartphone,
-    title: "Remote Patient Monitoring",
-    desc: "Real-time health data from wearable devices, enabling proactive clinical decisions.",
-    href: "/services/rpm",
-  },
-];
 
 const stats = [
   { icon: Users, value: "10,000+", label: "Patients Managed" },
