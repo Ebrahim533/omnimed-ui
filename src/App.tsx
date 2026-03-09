@@ -11,6 +11,7 @@ import CCMPage from "./pages/CCM";
 import RPMPage from "./pages/RPM";
 import Contact from "./pages/Contact";
 import Appointment from "./pages/Appointment";
+import Partner from "./pages/Partner";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const AnimatedRoutes = () => {
         <Route path="/services/rpm" element={<RPMPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/appointment" element={<Appointment />} />
+        <Route path="/partner" element={<Partner />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
