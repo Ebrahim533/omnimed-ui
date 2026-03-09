@@ -70,6 +70,15 @@ const ServiceTrilogy = () => (
               to={service.href}
               className="group block h-full rounded-2xl border border-border/50 bg-card/60 backdrop-blur-md p-8 transition-shadow duration-300 hover:shadow-2xl"
             >
+              <div className="rounded-xl overflow-hidden mb-5 aspect-[4/3]">
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+
               <Badge
                 variant="secondary"
                 className="mb-5 bg-primary/8 text-primary border-0 font-medium text-xs tracking-wide"
