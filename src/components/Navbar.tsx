@@ -12,6 +12,7 @@ const navLinks = [
     { label: "Chronic Care (CCM)", href: "/services/ccm" },
     { label: "Remote Monitoring (RPM)", href: "/services/rpm" },
   ]},
+  { label: "Partner", href: "/partner" },
   { label: "Contact", href: "/contact" },
 ];
 

@@ -28,6 +28,7 @@ const AnimatedRoutes = () => {
         <Route path="/services/rpm" element={<RPMPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/appointment" element={<Appointment />} />
+        <Route path="/partner" element={<Partner />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
