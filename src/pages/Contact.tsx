@@ -37,9 +37,9 @@ const contactSchema = z.object({
 type ContactFormValues = z.infer<typeof contactSchema>;
 
 const contactInfo = [
-  { icon: Phone, label: "Phone", value: "(555) 123-4567", verified: true },
-  { icon: Mail, label: "Email", value: "info@omnimed.com" },
-  { icon: MapPin, label: "Address", value: "123 Healthcare Ave, Suite 100, New York, NY 10001" },
+  { icon: Phone, label: "Phone", value: "(917) 744 7308", verified: true },
+  { icon: Mail, label: "Email", value: "info@omnimedhealth.com" },
+  { icon: MapPin, label: "Address", value: "New York, NY 10001" },
   { icon: Clock, label: "Office Hours", value: "Mon–Fri: 8am–6pm EST" },
 ];
 
