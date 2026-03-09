@@ -1,84 +1,33 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import Layout from "@/components/Layout";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2, Wifi, Bell, BarChart3 } from "lucide-react";
-import { fadeUp, sectionReveal, cardStagger, slideInLeft, slideInRight, viewportOnce, buttonHover, buttonTap } from "@/lib/animations";
-
-const features = [
-  "Real-time vitals monitoring via wearable devices",
-  "Automated alerts for abnormal readings",
-  "Secure data transmission and HIPAA compliance",
-  "Integration with major EHR systems",
-  "Patient-friendly mobile companion app",
-  "Clinical dashboard for provider oversight",
-];
-
-const highlights = [
-  { icon: Wifi, title: "Connected Devices", desc: "Compatible with leading health wearables for blood pressure, glucose, SpO2, and more." },
-  { icon: Bell, title: "Smart Alerts", desc: "Automated notifications when readings fall outside personalized thresholds." },
-  { icon: BarChart3, title: "Analytics Dashboard", desc: "Comprehensive clinical insights with trend analysis and population health views." },
-];
+import ServicePageLayout from "@/components/ServicePageLayout";
 
 const RPMPage = () => (
-  <Layout>
-    <section className="py-20 lg:py-28">
-      <div className="section-container">
-        <motion.div initial="hidden" animate="visible" className="max-w-3xl mb-14">
-          <motion.p custom={0} variants={fadeUp} className="text-primary font-display font-semibold text-sm tracking-wider uppercase mb-3">Remote Patient Monitoring</motion.p>
-          <motion.h1 custom={1} variants={fadeUp} className="text-4xl sm:text-5xl font-display font-bold text-foreground mb-6">Real-Time Data, Real-Time Care</motion.h1>
-          <motion.p custom={2} variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed">
-            Our RPM platform connects patients to their care team through wearable devices and smart sensors, enabling continuous health monitoring and proactive intervention from anywhere.
-          </motion.p>
-        </motion.div>
-
-        <div className="grid lg:grid-cols-2 gap-12 mb-20">
-          <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={slideInLeft}>
-            <h2 className="text-2xl font-display font-bold text-foreground mb-6">Platform Features</h2>
-            <div className="space-y-4">
-              {features.map((f, i) => (
-                <motion.div key={f} custom={i} initial="hidden" whileInView="visible" viewport={viewportOnce} variants={cardStagger} className="flex items-start gap-3">
-                  <CheckCircle2 className="text-secondary mt-0.5 shrink-0" size={20} />
-                  <span className="text-foreground">{f}</span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={slideInRight} className="space-y-6">
-            {highlights.map((item, i) => (
-              <motion.div
-                key={item.title}
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={viewportOnce}
-                variants={cardStagger}
-                whileHover={{ y: -4, transition: { duration: 0.3 } }}
-                className="card-elevated p-6 flex gap-4"
-              >
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <item.icon className="text-primary" size={20} />
-                </div>
-                <div>
-                  <h3 className="font-display font-semibold text-foreground mb-1">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-
-        <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionReveal} className="text-center">
-          <motion.div whileHover={buttonHover} whileTap={buttonTap} className="inline-block">
-            <Button asChild size="lg" className="rounded-full px-8">
-              <Link to="/appointment">Explore RPM <ArrowRight size={16} className="ml-1" /></Link>
-            </Button>
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
-  </Layout>
+  <ServicePageLayout
+    label="Remote Patient Monitoring"
+    headline="Enhance Patient Outcomes with Real-Time RPM"
+    subheadline="Our RPM platform connects patients to their care team through wearable devices and smart sensors, enabling continuous health monitoring and proactive intervention from anywhere."
+    heroStats={[
+      { value: "15K+", label: "Devices Connected" },
+      { value: "< 3s", label: "Alert Response" },
+      { value: "HIPAA", label: "Fully Compliant" },
+      { value: "87%", label: "Engagement Rate" },
+    ]}
+    supportItems={[
+      { title: "Full Program Setup", description: "Complete RPM infrastructure deployment including device procurement, configuration, and clinical workflow design." },
+      { title: "Patient Enrollment & Onboarding", description: "White-glove device delivery, setup assistance, and patient training for confident self-monitoring at home." },
+      { title: "Clinical Monitoring & Coordination", description: "24/7 automated vitals monitoring with clinical escalation for readings outside personalized thresholds." },
+      { title: "Documentation & Billing Compliance", description: "Automated data logging, time tracking, and CPT code capture for seamless reimbursement." },
+      { title: "Monthly Reporting & Insights", description: "Population health dashboards with trend analysis, device compliance rates, and clinical outcome metrics." },
+      { title: "Device & Data Management", description: "End-to-end lifecycle management for all connected devices, including replacements, updates, and secure data transmission." },
+    ]}
+    includedItems={[
+      { title: "Real-Time Vitals Monitoring", content: "Continuous tracking of blood pressure, glucose, SpO2, weight, and heart rate through FDA-approved wearable devices with instant cloud sync." },
+      { title: "Automated Smart Alerts", content: "Intelligent notification system that alerts care teams when patient readings fall outside individually configured clinical thresholds." },
+      { title: "Patient-Friendly Mobile App", content: "An intuitive companion app that empowers patients to view their own data, receive reminders, and communicate with their care team." },
+      { title: "Clinical Analytics Dashboard", content: "Comprehensive provider portal with trend visualization, population health views, and exportable reports for quality measures." },
+      { title: "EHR Integration & Interoperability", content: "Seamless bi-directional data flow with major EHR systems including Epic, Cerner, Athenahealth, and more." },
+    ]}
+    ctaLabel="Explore RPM"
+  />
 );
 
 export default RPMPage;

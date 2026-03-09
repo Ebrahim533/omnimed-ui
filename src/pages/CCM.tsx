@@ -1,84 +1,33 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import Layout from "@/components/Layout";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2, Calendar, Phone, LineChart } from "lucide-react";
-import { fadeUp, sectionReveal, cardStagger, slideInLeft, slideInRight, viewportOnce, buttonHover, buttonTap } from "@/lib/animations";
-
-const features = [
-  "Comprehensive care for 2+ chronic conditions",
-  "Monthly care plan development and revision",
-  "Continuous communication with care team",
-  "Medication adherence tracking",
-  "Health education and self-management support",
-  "Preventive care and wellness planning",
-];
-
-const highlights = [
-  { icon: Calendar, title: "Structured Follow-ups", desc: "Regular check-ins ensure care plans stay on track and patients feel supported." },
-  { icon: Phone, title: "Always Connected", desc: "Patients have direct access to their care coordinator for questions and concerns." },
-  { icon: LineChart, title: "Data-Driven Insights", desc: "We track outcomes and adjust plans based on real health data, not guesswork." },
-];
+import ServicePageLayout from "@/components/ServicePageLayout";
 
 const CCMPage = () => (
-  <Layout>
-    <section className="py-20 lg:py-28">
-      <div className="section-container">
-        <motion.div initial="hidden" animate="visible" className="max-w-3xl mb-14">
-          <motion.p custom={0} variants={fadeUp} className="text-primary font-display font-semibold text-sm tracking-wider uppercase mb-3">Chronic Care Management</motion.p>
-          <motion.h1 custom={1} variants={fadeUp} className="text-4xl sm:text-5xl font-display font-bold text-foreground mb-6">Long-Term Health Stability</motion.h1>
-          <motion.p custom={2} variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed">
-            Our Chronic Care Management program provides ongoing, coordinated care for patients managing multiple chronic conditions, reducing hospitalizations and improving quality of life.
-          </motion.p>
-        </motion.div>
-
-        <div className="grid lg:grid-cols-2 gap-12 mb-20">
-          <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={slideInLeft}>
-            <h2 className="text-2xl font-display font-bold text-foreground mb-6">Program Benefits</h2>
-            <div className="space-y-4">
-              {features.map((f, i) => (
-                <motion.div key={f} custom={i} initial="hidden" whileInView="visible" viewport={viewportOnce} variants={cardStagger} className="flex items-start gap-3">
-                  <CheckCircle2 className="text-secondary mt-0.5 shrink-0" size={20} />
-                  <span className="text-foreground">{f}</span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={slideInRight} className="space-y-6">
-            {highlights.map((item, i) => (
-              <motion.div
-                key={item.title}
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={viewportOnce}
-                variants={cardStagger}
-                whileHover={{ y: -4, transition: { duration: 0.3 } }}
-                className="card-elevated p-6 flex gap-4"
-              >
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <item.icon className="text-primary" size={20} />
-                </div>
-                <div>
-                  <h3 className="font-display font-semibold text-foreground mb-1">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-
-        <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionReveal} className="text-center">
-          <motion.div whileHover={buttonHover} whileTap={buttonTap} className="inline-block">
-            <Button asChild size="lg" className="rounded-full px-8">
-              <Link to="/appointment">Start CCM Program <ArrowRight size={16} className="ml-1" /></Link>
-            </Button>
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
-  </Layout>
+  <ServicePageLayout
+    label="Chronic Care Management"
+    headline="Long-Term Health Stability for Complex Patients"
+    subheadline="Our CCM program provides ongoing, coordinated care for patients managing multiple chronic conditions — reducing hospitalizations, improving adherence, and elevating quality of life."
+    heroStats={[
+      { value: "35%", label: "Reduced Readmissions" },
+      { value: "2M+", label: "Care Minutes Logged" },
+      { value: "99.9%", label: "Uptime Reliability" },
+      { value: "50+", label: "EHR Integrations" },
+    ]}
+    supportItems={[
+      { title: "Full Program Setup", description: "Turnkey CCM workflow implementation customized to your clinic's size, specialty, and patient demographics." },
+      { title: "Patient Enrollment & Onboarding", description: "Automated eligibility screening, consent collection, and patient education for seamless onboarding." },
+      { title: "Clinical Monitoring & Coordination", description: "Continuous monitoring by dedicated care coordinators with escalation protocols for abnormal findings." },
+      { title: "Documentation & Billing Compliance", description: "Automated time tracking, CPT code assignment, and CMS-compliant documentation for every interaction." },
+      { title: "Monthly Reporting & Insights", description: "Actionable dashboards showing enrollment growth, patient outcomes, and revenue performance." },
+      { title: "Health Education & Self-Management", description: "Personalized educational resources and coaching to empower patients in managing their conditions." },
+    ]}
+    includedItems={[
+      { title: "Comprehensive Care for 2+ Chronic Conditions", content: "Structured care plans that address the interplay between multiple chronic conditions, with monthly revisions based on patient progress." },
+      { title: "Continuous Communication with Care Team", content: "Patients have direct, ongoing access to their assigned care coordinator for questions, medication concerns, and health updates." },
+      { title: "Medication Adherence Tracking", content: "Smart reminders, refill coordination, and regular medication reconciliation to ensure patients stay on track with their treatment regimens." },
+      { title: "Preventive Care & Wellness Planning", content: "Proactive screening schedules, immunization tracking, and lifestyle modification support to prevent disease progression." },
+      { title: "Data-Driven Care Adjustments", content: "We track outcomes and adjust care plans based on real health data — not guesswork — using trend analysis and clinical benchmarks." },
+    ]}
+    ctaLabel="Start CCM Program"
+  />
 );
 
 export default CCMPage;
