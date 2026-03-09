@@ -4,6 +4,9 @@ import { Stethoscope, Activity, Smartphone, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cardStagger, sectionReveal, viewportOnce, buttonHover, buttonTap } from "@/lib/animations";
+import servicePcm from "@/assets/service-pcm.jpg";
+import serviceCcm from "@/assets/service-ccm.jpg";
+import serviceRpm from "@/assets/service-rpm.jpg";
 
 const services = [
   {
@@ -12,6 +15,7 @@ const services = [
     badge: "Specialist-Led",
     desc: "Specialist-led care coordination for patients with complex, high-risk conditions requiring focused, ongoing clinical attention.",
     href: "/services/pcm",
+    image: servicePcm,
   },
   {
     icon: Activity,
@@ -19,6 +23,7 @@ const services = [
     badge: "Long-Term",
     desc: "Comprehensive, continuous management for patients living with two or more chronic conditions — reducing complications and ER visits.",
     href: "/services/ccm",
+    image: serviceCcm,
   },
   {
     icon: Smartphone,
@@ -26,6 +31,7 @@ const services = [
     badge: "Real-Time",
     desc: "Real-time health data from connected wearable devices, enabling proactive clinical decisions and early intervention.",
     href: "/services/rpm",
+    image: serviceRpm,
   },
 ];
 
