@@ -1,13 +1,20 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Users, TrendingUp, Clock, Shield, Linkedin } from "lucide-react";
 import Layout from "@/components/Layout";
 import ServiceTrilogy from "@/components/ServiceTrilogy";
 import { fadeUp, sectionReveal, cardStagger, scaleIn, slideInLeft, slideInRight, viewportOnce, buttonHover, buttonTap } from "@/lib/animations";
-import heroBg from "@/assets/hero-bg.jpg";
 import ceoPortrait from "@/assets/ceo-portrait.jpg";
 import ceoSignature from "@/assets/ceo-signature.png";
+
+const heroImages = [
+  "https://images.pexels.com/photos/7089401/pexels-photo-7089401.jpeg",
+  "https://images.pexels.com/photos/12599544/pexels-photo-12599544.jpeg",
+  "https://images.pexels.com/photos/5215000/pexels-photo-5215000.jpeg",
+  "https://images.pexels.com/photos/7653083/pexels-photo-7653083.jpeg",
+];
 
 const stats = [
   { icon: Users, value: "10,000+", label: "Patients Managed" },
@@ -16,15 +23,37 @@ const stats = [
   { icon: Shield, value: "98%", label: "Patient Satisfaction" },
 ];
 
-const Index = () => (
-  <Layout>
-    {/* Hero */}
-    <section className="relative overflow-hidden">
+const Index = () => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000); // Change image every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <Layout>
+      {/* Hero */}
+      <section className="relative overflow-hidden">
       <div className="absolute inset-0">
-        <img src={heroBg} alt="" className="w-full h-full object-cover" />
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentImageIndex}
+            src={heroImages[currentImageIndex]}
+            alt="Hero background"
+            className="w-full h-full object-cover"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          />
+        </AnimatePresence>
         <div className="absolute inset-0 bg-foreground/70" />
       </div>
-      <div className="relative section-container py-24 sm:py-32 lg:py-40">
+      <div className="relative section-container py-24 sm:py-32 lg:py-40 z-10">
         <motion.div className="max-w-2xl" initial="hidden" animate="visible">
           <motion.p custom={0} variants={fadeUp} className="text-secondary font-display font-semibold text-sm tracking-wider uppercase mb-4">
             Technology-Enabled Care
@@ -154,7 +183,8 @@ const Index = () => (
         </motion.div>
       </div>
     </section>
-  </Layout>
-);
+    </Layout>
+  );
+};
 
 export default Index;
