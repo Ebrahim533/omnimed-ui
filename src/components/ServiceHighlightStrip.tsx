@@ -84,51 +84,45 @@ const ServiceHighlightStrip = () => {
               >
                 <Link
                   to={service.href}
-                  className={`group relative block h-full rounded-2xl overflow-hidden transition-all duration-500 ${
+                  className={`group block h-full rounded-2xl overflow-hidden bg-card border border-border/50 transition-all duration-500 ${
                     isActive
                       ? "ring-2 ring-primary shadow-lg shadow-primary/10"
                       : "hover:shadow-xl hover:-translate-y-1"
                   }`}
                 >
-                  {/* Background image */}
-                  <div className="absolute inset-0">
+                  {/* Image */}
+                  <div className="relative aspect-[16/10] overflow-hidden">
                     <img
                       src={service.image}
                       alt={service.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/50 to-foreground/20" />
-                  </div>
-
-                  {/* Content overlay */}
-                  <div className="relative z-10 p-6 sm:p-8 flex flex-col justify-end min-h-[260px]">
-                    {/* Active indicator */}
                     {isActive && (
                       <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        className="absolute top-4 right-4 px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold"
+                        className="absolute top-3 right-3 px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold"
                       >
                         Current
                       </motion.div>
                     )}
+                  </div>
 
-                    {/* Icon */}
-                    <div className="w-10 h-10 rounded-lg bg-primary-foreground/15 backdrop-blur-sm flex items-center justify-center mb-4 border border-primary-foreground/20 transition-colors duration-300 group-hover:bg-primary/80">
-                      <service.icon className="text-primary-foreground" size={20} strokeWidth={1.5} />
+                  {/* Content */}
+                  <div className="p-6">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
+                      <service.icon className="text-primary" size={20} strokeWidth={1.5} />
                     </div>
 
-                    {/* Text */}
-                    <h3 className="font-display font-bold text-primary-foreground text-lg sm:text-xl mb-2">
+                    <h3 className="font-display font-bold text-foreground text-lg sm:text-xl mb-2">
                       {service.title}
                     </h3>
-                    <p className="text-primary-foreground/70 text-sm leading-relaxed mb-4 line-clamp-2">
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">
                       {service.desc}
                     </p>
 
-                    {/* CTA */}
-                    <div className="flex items-center gap-1.5 text-primary-foreground/80 text-sm font-medium group-hover:text-primary-foreground transition-colors">
+                    <div className="flex items-center gap-1.5 text-primary text-sm font-medium group-hover:gap-2.5 transition-all">
                       <span>{isActive ? "You're here" : "Learn more"}</span>
                       {!isActive && (
                         <ArrowRight
