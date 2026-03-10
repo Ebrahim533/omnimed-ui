@@ -12,6 +12,19 @@ const RPMPage = () => (
       { value: "HIPAA", label: "Fully Compliant" },
       { value: "87%", label: "Engagement Rate" },
     ]}
+    featureHighlights={[
+      "Real-Time Monitoring",
+      "FDA-Approved Devices",
+      "Smart Alerts",
+      "Patient Mobile App",
+      "EHR Integration",
+    ]}
+    howItWorksSteps={[
+      "Enroll patients and deliver configured monitoring devices",
+      "Patients record vitals from home via connected devices",
+      "Care team monitors data with automated threshold alerts",
+      "Proactive interventions prevent complications and ER visits",
+    ]}
     supportItems={[
       { title: "Full Program Setup", description: "Complete RPM infrastructure deployment including device procurement, configuration, and clinical workflow design." },
       { title: "Patient Enrollment & Onboarding", description: "White-glove device delivery, setup assistance, and patient training for confident self-monitoring at home." },

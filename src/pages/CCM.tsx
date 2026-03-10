@@ -12,6 +12,19 @@ const CCMPage = () => (
       { value: "99.9%", label: "Uptime Reliability" },
       { value: "50+", label: "EHR Integrations" },
     ]}
+    featureHighlights={[
+      "Multi-Condition Management",
+      "Continuous Monitoring",
+      "Patient Education",
+      "CMS Compliant",
+      "Data-Driven Care",
+    ]}
+    howItWorksSteps={[
+      "Screen and enroll eligible patients with 2+ chronic conditions",
+      "Create personalized, multi-condition care plans",
+      "Care coordinators provide ongoing monthly engagement",
+      "Measure outcomes and optimize treatment continuously",
+    ]}
     supportItems={[
       { title: "Full Program Setup", description: "Turnkey CCM workflow implementation customized to your clinic's size, specialty, and patient demographics." },
       { title: "Patient Enrollment & Onboarding", description: "Automated eligibility screening, consent collection, and patient education for seamless onboarding." },

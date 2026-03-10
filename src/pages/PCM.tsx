@@ -12,6 +12,19 @@ const PCMPage = () => (
       { value: "24/7", label: "Care Team Access" },
       { value: "100%", label: "HIPAA Compliant" },
     ]}
+    featureHighlights={[
+      "Specialist-Led Care",
+      "Evidence-Based Plans",
+      "24/7 Support Access",
+      "HIPAA Compliant",
+      "EHR Integrated",
+    ]}
+    howItWorksSteps={[
+      "Schedule your consultation and assess patient eligibility",
+      "Our specialists develop a comprehensive care plan",
+      "Dedicated coordinators manage ongoing patient engagement",
+      "Track outcomes with real-time reporting dashboards",
+    ]}
     supportItems={[
       { title: "Full Program Setup", description: "End-to-end workflow design tailored to your practice's unique patient population and specialties." },
       { title: "Patient Enrollment & Onboarding", description: "Streamlined enrollment with patient education materials and consent management." },
