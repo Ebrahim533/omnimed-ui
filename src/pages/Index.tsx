@@ -103,7 +103,7 @@ const Index = () => {
       </div>
     </section>
 
-    <ServiceTrilogy />
+    <ServiceHighlightStrip />
 
     {/* Founder Vision Banner */}
     <section className="py-20 lg:py-28 surface-tint">
