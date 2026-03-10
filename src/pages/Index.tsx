@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Users, TrendingUp, Clock, Shield, Linkedin } from "lucide-react";
 import Layout from "@/components/Layout";
-import ServiceTrilogy from "@/components/ServiceTrilogy";
+import ServiceHighlightStrip from "@/components/ServiceHighlightStrip";
 import { fadeUp, sectionReveal, cardStagger, scaleIn, slideInLeft, slideInRight, viewportOnce, buttonHover, buttonTap } from "@/lib/animations";
 import ceoPortrait from "@/assets/ceo-portrait.jpg";
 import ceoSignature from "@/assets/ceo-signature.png";
