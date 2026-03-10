@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ArrowRight, CheckCircle2, Sparkles, Shield, Users, RefreshCw, type LucideIcon } from "lucide-react";
 import { fadeUp, cardStagger, viewportOnce, buttonHover, buttonTap, EASE_PROFESSIONAL } from "@/lib/animations";
+import ServiceHighlightStrip from "@/components/ServiceHighlightStrip";
 
 /* ─── Types ─── */
 interface ServicePageProps {
@@ -106,6 +107,9 @@ const ServicePageLayout = ({
           </div>
         </div>
       </section>
+
+      {/* ── Service Highlights ── */}
+      <ServiceHighlightStrip />
 
       {/* ── Support Framework Grid ── */}
       <section className="py-20 lg:py-28 bg-background">
