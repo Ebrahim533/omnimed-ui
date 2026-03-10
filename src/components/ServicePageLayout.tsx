@@ -108,6 +108,9 @@ const ServicePageLayout = ({
         </div>
       </section>
 
+      {/* ── Service Highlights ── */}
+      <ServiceHighlightStrip />
+
       {/* ── Support Framework Grid ── */}
       <section className="py-20 lg:py-28 bg-background">
         <div className="section-container">
