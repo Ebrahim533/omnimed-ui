@@ -89,7 +89,7 @@ const Appointment = () => {
 
                   <div className="space-y-2">
                     <Label htmlFor="phone">Phone Number</Label>
-                    <Input id="phone" type="tel" placeholder="(555) 123-4567" className="transition-colors duration-300 focus:border-primary" />
+                    <Input id="phone" type="tel" placeholder="(917) 744 7308" className="transition-colors duration-300 focus:border-primary" />
                   </div>
 
                   <div className="space-y-2">

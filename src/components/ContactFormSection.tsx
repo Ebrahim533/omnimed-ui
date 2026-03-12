@@ -108,7 +108,7 @@ const ContactFormSection = () => {
                       </div>
                       <div className="grid sm:grid-cols-2 gap-4">
                         <FormField control={form.control} name="phone" render={({ field }) => (
-                          <FormItem><FormLabel>Phone Number</FormLabel><FormControl><Input type="tel" placeholder="(555) 123-4567" className="transition-colors duration-300 focus:border-primary" {...field} /></FormControl><FormMessage /></FormItem>
+                          <FormItem><FormLabel>Phone Number</FormLabel><FormControl><Input type="tel" placeholder="(917) 744 7308" className="transition-colors duration-300 focus:border-primary" {...field} /></FormControl><FormMessage /></FormItem>
                         )} />
                         <FormField control={form.control} name="service" render={({ field }) => (
                           <FormItem><FormLabel>Service Interest</FormLabel>

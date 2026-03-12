@@ -6,6 +6,8 @@ import { ArrowRight, Users, TrendingUp, Clock, Shield, Linkedin } from "lucide-r
 import Layout from "@/components/Layout";
 import ServiceHighlightStrip from "@/components/ServiceHighlightStrip";
 import { fadeUp, sectionReveal, cardStagger, scaleIn, slideInLeft, slideInRight, viewportOnce, buttonHover, buttonTap } from "@/lib/animations";
+import { useFeaturedPerson, useSiteSettings } from "@/hooks/useSanity";
+import { urlFor } from "@/lib/sanity";
 import ceoPortrait from "@/assets/ceo-portrait.jpg";
 import ceoSignature from "@/assets/ceo-signature.png";
 
@@ -25,6 +27,8 @@ const stats = [
 
 const Index = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { person: featuredPerson, loading: featuredLoading } = useFeaturedPerson();
+  const { settings, loading: settingsLoading } = useSiteSettings();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -106,59 +110,82 @@ const Index = () => {
     <ServiceHighlightStrip />
 
     {/* Founder Vision Banner */}
-    <section className="py-20 lg:py-28 surface-tint">
-      <div className="section-container">
-        <div className="grid lg:grid-cols-5 gap-10 lg:gap-16 items-center">
-          <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={slideInLeft} className="lg:col-span-2">
-            <motion.div
-              className="relative rounded-2xl overflow-hidden aspect-[3/4] max-w-sm mx-auto lg:mx-0"
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewportOnce}
-              variants={scaleIn}
-            >
-              <img src={ceoPortrait} alt="Dr. James Mitchell, CEO & Founder of OmniMed" className="w-full h-full object-cover" loading="lazy" />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
-            </motion.div>
-          </motion.div>
-
-          <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={slideInRight} className="lg:col-span-3 space-y-6">
-            <p className="text-primary font-display font-semibold text-sm tracking-wider uppercase">A Message from Our Founder</p>
-            <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground leading-tight">
-              Leading the Future of <span className="gradient-text">Proactive Care</span>
-            </h2>
-            <blockquote className="text-lg sm:text-xl text-muted-foreground leading-relaxed border-l-4 border-secondary pl-6 italic">
-              "We aren't just managing health — we're predicting a better quality of life. Every patient deserves care that anticipates their needs, not one that merely reacts to crises."
-            </blockquote>
-            <p className="text-muted-foreground leading-relaxed">
-              At OmniMed, we've built a platform where technology and compassion converge. Our mission is to shift healthcare from reactive to proactive — empowering providers with real-time insights and patients with peace of mind.
-            </p>
-
-            <div className="pt-4 space-y-3">
-              <motion.img
-                src={ceoSignature}
-                alt="Dr. James Mitchell's signature"
-                className="h-12 w-auto opacity-80"
-                initial={{ opacity: 0, scale: 0.85 }}
-                whileInView={{ opacity: 0.8, scale: 1 }}
+    {!featuredLoading && featuredPerson && (
+      <section className="py-20 lg:py-28 surface-tint">
+        <div className="section-container">
+          <div className="grid lg:grid-cols-5 gap-10 lg:gap-16 items-center">
+            <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={slideInLeft} className="lg:col-span-2">
+              <motion.div
+                className="relative rounded-2xl overflow-hidden aspect-[3/4] max-w-sm mx-auto lg:mx-0 bg-muted"
+                initial="hidden"
+                whileInView="visible"
                 viewport={viewportOnce}
-                transition={{ delay: 0.3, duration: 0.6, type: "spring", stiffness: 120, damping: 20 }}
-                loading="lazy"
-              />
-              <div className="flex items-center gap-3">
-                <div>
-                  <p className="font-display font-bold text-foreground">Dr. James Mitchell</p>
-                  <p className="text-sm text-muted-foreground">CEO & Founder, OmniMed</p>
+                variants={scaleIn}
+              >
+                {featuredPerson.image ? (
+                  <img
+                    src={urlFor(featuredPerson.image).width(500).height(650).auto("format").url()}
+                    alt={featuredPerson.name}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                ) : (
+                  <img src={ceoPortrait} alt={featuredPerson.name} className="w-full h-full object-cover" loading="lazy" />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
+              </motion.div>
+            </motion.div>
+
+            <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={slideInRight} className="lg:col-span-3 space-y-6">
+              <p className="text-primary font-display font-semibold text-sm tracking-wider uppercase">A Message from Our Founder</p>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground leading-tight">
+                Leading the Future of <span className="gradient-text">Proactive Care</span>
+              </h2>
+              {featuredPerson.bio && (
+                <blockquote className="text-lg sm:text-xl text-muted-foreground leading-relaxed border-l-4 border-secondary pl-6 italic">
+                  "{featuredPerson.bio}"
+                </blockquote>
+              )}
+              <p className="text-muted-foreground leading-relaxed">
+                At OmniMed, we've built a platform where technology and compassion converge. Our mission is to shift healthcare from reactive to proactive — empowering providers with real-time insights and patients with peace of mind.
+              </p>
+
+              <div className="pt-4 space-y-3">
+                {settings?.ceoSignature && (
+                  <motion.img
+                    src={urlFor(settings.ceoSignature).width(80).auto("format").url()}
+                    alt="CEO Signature"
+                    className="h-12 w-auto opacity-80"
+                    initial={{ opacity: 0, scale: 0.85 }}
+                    whileInView={{ opacity: 0.8, scale: 1 }}
+                    viewport={viewportOnce}
+                    transition={{ delay: 0.3, duration: 0.6, type: "spring", stiffness: 120, damping: 20 }}
+                    loading="lazy"
+                  />
+                )}
+                <div className="flex items-center gap-3">
+                  <div>
+                    <p className="font-display font-bold text-foreground">{featuredPerson.name}</p>
+                    <p className="text-sm text-muted-foreground">{featuredPerson.role}</p>
+                  </div>
+                  {featuredPerson.social && featuredPerson.social.length > 0 && (
+                    <a
+                      href={featuredPerson.social[0].url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center hover:bg-primary/20 transition-colors"
+                      aria-label={`${featuredPerson.name}'s ${featuredPerson.social[0].platform}`}
+                    >
+                      <Linkedin size={15} className="text-primary" />
+                    </a>
+                  )}
                 </div>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center hover:bg-primary/20 transition-colors" aria-label="Dr. James Mitchell's LinkedIn profile">
-                  <Linkedin size={15} className="text-primary" />
-                </a>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    )}
 
     {/* CTA */}
     <section className="py-20">
