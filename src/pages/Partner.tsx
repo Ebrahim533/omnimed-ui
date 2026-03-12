@@ -253,6 +253,105 @@ const Partner = () => {
         </div>
       </section>
 
+      {/* ── Why Offer RPM & CCM ── */}
+      <section className="py-20 lg:py-28">
+        <div className="section-container">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOnce}
+              variants={sectionReveal}
+            >
+              <Badge variant="secondary" className="mb-5 bg-secondary/10 text-secondary border-0 font-medium text-xs tracking-wide">
+                Clinical Impact
+              </Badge>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground mb-6 leading-tight">
+                Why Offer RPM &amp; CCM?
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-8">
+                Partner with us to deliver proactive, technology-enabled care management that transforms patient outcomes while strengthening your practice's financial health.
+              </p>
+              <motion.div whileHover={buttonHover} whileTap={buttonTap} className="inline-block">
+                <Button asChild>
+                  <a href="#partner-form">Start Your Partnership <ArrowRight size={16} className="ml-1.5" /></a>
+                </Button>
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOnce}
+              variants={fadeUp}
+              className="space-y-4"
+            >
+              {[
+                "Improve chronic disease management",
+                "Reduce hospitalizations and ER visits",
+                "Strengthen patient engagement and adherence",
+                "Increase quality scores and care coordination",
+                "Generate additional, compliant reimbursement revenue"
+              ].map((item, i) => (
+                <motion.div
+                  key={item}
+                  custom={i}
+                  variants={cardStagger}
+                  className="flex items-start gap-4 p-4 rounded-xl border border-border/50 bg-card/40 backdrop-blur-sm"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="text-primary" size={18} />
+                  </div>
+                  <p className="text-foreground font-medium">{item}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Why Partner With Us ── */}
+      <section className="py-20 lg:py-28 surface-tint">
+        <div className="section-container">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
+            variants={sectionReveal}
+            className="text-center max-w-2xl mx-auto mb-14"
+          >
+            <p className="text-primary font-display font-semibold text-sm tracking-wider uppercase mb-3">Partner Benefits</p>
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground mb-4">Why Partner With Us</h2>
+            <p className="text-muted-foreground leading-relaxed">Experience the OmniMed difference — comprehensive support, proven technology, and a commitment to your success.</p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { title: "Turnkey implementation", desc: "Seamless integration with minimal disruption" },
+              { title: "HIPAA-compliant technology", desc: "Enterprise-grade security and compliance" },
+              { title: "Dedicated care management team", desc: "Licensed clinicians supporting your patients" },
+              { title: "No disruption to workflow", desc: "Designed to enhance, not interrupt" }
+            ].map((benefit, i) => (
+              <motion.div
+                key={benefit.title}
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOnce}
+                variants={cardStagger}
+                className="group p-6 rounded-2xl border border-border/50 bg-card/60 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+              >
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary/20">
+                  <ShieldCheck className="text-primary" size={20} strokeWidth={1.5} />
+                </div>
+                <h3 className="font-display font-semibold text-foreground mb-2">{benefit.title}</h3>
+                <p className="text-sm text-muted-foreground">{benefit.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Managed Services / What's Included ── */}
       <section className="py-20 lg:py-28">
         <div className="section-container">
