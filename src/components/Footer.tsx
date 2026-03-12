@@ -38,15 +38,15 @@ const Footer = () => (
         <div>
           <h4 className="font-display font-semibold text-background mb-4">Contact</h4>
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-sm text-background/60">
-              <Phone size={14} /> <span>(555) 123-4567</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-background/60">
-              <Mail size={14} /> <span>info@omnimed.com</span>
-            </div>
-            <div className="flex items-start gap-2 text-sm text-background/60">
-              <MapPin size={14} className="mt-0.5" /> <span>123 Healthcare Ave, Suite 100<br />New York, NY 10001</span>
-            </div>
+            <a href="tel:9177447308" className="flex items-center gap-2 text-sm text-background/60 hover:text-background transition-colors">
+              <Phone size={14} /> <span>(917) 744-7308</span>
+            </a>
+            <a href="mailto:Info@Omnimedhealth.org" className="flex items-center gap-2 text-sm text-background/60 hover:text-background transition-colors">
+              <Mail size={14} /> <span>Info@Omnimedhealth.org</span>
+            </a>
+            <a href="https://Omnimedhealth.org" target="_blank" rel="noopener noreferrer" className="flex items-start gap-2 text-sm text-background/60 hover:text-background transition-colors">
+              <MapPin size={14} className="mt-0.5" /> <span>Omnimedhealth.org</span>
+            </a>
           </div>
         </div>
       </div>

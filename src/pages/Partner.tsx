@@ -10,9 +10,13 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plug, ShieldCheck, HeartHandshake, Building2, Cpu, ArrowRight, CheckCircle2, Send } from "lucide-react";
+import {
+  Plug, ShieldCheck, HeartHandshake, Building2, Cpu, ArrowRight, CheckCircle2, Send,
+  Settings, Users, Stethoscope, FileCheck, BarChart3, Quote, TrendingUp, DollarSign, Activity
+} from "lucide-react";
 import { fadeUp, sectionReveal, cardStagger, viewportOnce, buttonHover, buttonTap } from "@/lib/animations";
 import partnerHero from "@/assets/partner-hero.jpg";
+import ceoPortrait from "@/assets/ceo-portrait.jpg";
 
 /* ─── Partner form schema ─── */
 const partnerSchema = z.object({
@@ -29,9 +33,52 @@ const REQUIRED_FIELDS: (keyof PartnerFormValues)[] = ["orgName", "contactPerson"
 
 /* ─── Data ─── */
 const valuePillars = [
-  { icon: Plug, title: "Turnkey Integration", badge: "Plug & Play", desc: "Seamlessly integrate our RPM and CCM workflows into your existing practice — zero disruption, immediate value." },
-  { icon: ShieldCheck, title: "Compliance & Revenue", badge: "HIPAA Ready", desc: "Automated billing codes (99490, 99457, 99491) and HIPAA-compliant data handling that maximizes reimbursement." },
-  { icon: HeartHandshake, title: "Patient Retention", badge: "Engagement", desc: "Tech-enabled touchpoints — from wearable alerts to care-plan reminders — that keep patients engaged and loyal." },
+  {
+    icon: Activity,
+    title: "Clinical Impact",
+    badge: "Patient Outcomes",
+    desc: "Improve chronic disease management, increase quality scores, and reduce hospitalizations and ER visits through proactive, technology-enabled care."
+  },
+  {
+    icon: DollarSign,
+    title: "Financial Growth",
+    badge: "Revenue",
+    desc: "Generate additional, compliant reimbursement revenue with automated billing codes (99490, 99457, 99491) and optimized care coordination workflows."
+  },
+  {
+    icon: TrendingUp,
+    title: "Scalable Infrastructure",
+    badge: "Plug & Play",
+    desc: "Seamlessly integrate our RPM, CCM, and PCM workflows into your existing practice — zero disruption, immediate value, HIPAA-compliant from day one."
+  },
+];
+
+const managedServices = [
+  {
+    icon: Settings,
+    title: "Full Program Setup",
+    desc: "End-to-end workflow design tailored to your practice's existing systems, EHR integrations, and patient population."
+  },
+  {
+    icon: Users,
+    title: "Patient Onboarding",
+    desc: "Complete enrollment and tech-enablement — from eligibility verification to device deployment and patient education."
+  },
+  {
+    icon: Stethoscope,
+    title: "Clinical Monitoring",
+    desc: "Professional care coordination with licensed clinicians managing patient alerts, care plans, and monthly touchpoints."
+  },
+  {
+    icon: FileCheck,
+    title: "Compliance & Billing",
+    desc: "Full documentation and billing support ensuring accurate coding, audit readiness, and maximized reimbursement."
+  },
+  {
+    icon: BarChart3,
+    title: "Insights & Reporting",
+    desc: "Monthly performance analytics with actionable dashboards covering enrollment rates, clinical outcomes, and revenue impact."
+  },
 ];
 
 const partnerPaths = [
@@ -62,10 +109,7 @@ const FloatingDashboard = () => {
   }, [y]);
 
   return (
-    <motion.div
-      style={{ y: smoothY, rotateZ: rotate }}
-      className="relative"
-    >
+    <motion.div style={{ y: smoothY, rotateZ: rotate }} className="relative">
       <div className="rounded-2xl overflow-hidden shadow-2xl border border-border/30">
         <img src={partnerHero} alt="OmniMed SaaS medical dashboard" className="w-full h-auto" loading="eager" />
       </div>
@@ -144,11 +188,19 @@ const Partner = () => {
                 </Badge>
               </motion.div>
               <motion.h1 custom={1} variants={fadeUp} className="text-4xl sm:text-5xl lg:text-[3.25rem] font-display font-bold text-foreground leading-tight mb-6">
-                Scale Your Practice with OmniMed's <span className="gradient-text">Proactive Care Infrastructure.</span>
+                Proactive, Technology-Enabled <span className="gradient-text">Care Management</span> for Your Practice.
               </motion.h1>
-              <motion.p custom={2} variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-xl">
-                Join our network of healthcare innovators and leverage our RPM, CCM, and PCM technology to improve patient outcomes and clinic revenue.
+              <motion.p custom={2} variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed mb-4 max-w-xl">
+                Enhance patient outcomes, reduce hospitalizations and ER visits, and unlock new revenue streams with OmniMed's integrated RPM, CCM, and PCM infrastructure.
               </motion.p>
+              <motion.ul custom={2} variants={fadeUp} className="space-y-2 mb-8 max-w-xl">
+                {["Reduce hospitalizations & ER visits", "Improve chronic disease management", "Generate compliant reimbursement revenue"].map((item) => (
+                  <li key={item} className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                    <CheckCircle2 size={16} className="text-secondary shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </motion.ul>
               <motion.div custom={3} variants={fadeUp}>
                 <motion.div whileHover={buttonHover} whileTap={buttonTap} className="inline-block">
                   <Button size="lg" className="rounded-full px-8" asChild>
@@ -175,7 +227,7 @@ const Partner = () => {
           <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionReveal} className="text-center max-w-2xl mx-auto mb-14">
             <p className="text-primary font-display font-semibold text-sm tracking-wider uppercase mb-3">Why Partner?</p>
             <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground mb-4">Built for Scale, Designed for Care</h2>
-            <p className="text-muted-foreground leading-relaxed">Everything your practice needs to deliver proactive, technology-driven care management.</p>
+            <p className="text-muted-foreground leading-relaxed">Everything your practice needs to deliver proactive, technology-driven care management and generate sustainable growth.</p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
@@ -198,6 +250,76 @@ const Partner = () => {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── Managed Services / What's Included ── */}
+      <section className="py-20 lg:py-28">
+        <div className="section-container">
+          <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={sectionReveal} className="text-center max-w-2xl mx-auto mb-14">
+            <p className="text-primary font-display font-semibold text-sm tracking-wider uppercase mb-3">Managed Services</p>
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground mb-4">What's Included</h2>
+            <p className="text-muted-foreground leading-relaxed">Our end-to-end operational support covers every stage — from setup to ongoing performance optimization.</p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+            {managedServices.map((s, i) => (
+              <motion.div
+                key={s.title}
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOnce}
+                variants={cardStagger}
+                className="group card-elevated p-7 rounded-2xl flex flex-col"
+              >
+                <div className="w-11 h-11 rounded-xl bg-secondary/10 flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-secondary/20">
+                  <s.icon className="text-secondary" size={22} strokeWidth={1.5} />
+                </div>
+                <h3 className="font-display font-semibold text-foreground mb-2">{s.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CEO Message ── */}
+      <section className="py-20 lg:py-28 surface-tint">
+        <div className="section-container">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
+            variants={sectionReveal}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="card-elevated rounded-2xl p-8 sm:p-12 flex flex-col md:flex-row gap-8 items-center">
+              <div className="shrink-0">
+                <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden border-2 border-primary/20 shadow-lg">
+                  <img src={ceoPortrait} alt="Giash Ahmed, President & CEO" className="w-full h-full object-cover" />
+                </div>
+              </div>
+              <div className="flex-1 text-center md:text-left">
+                <Quote className="text-primary/30 mb-3" size={32} />
+                <p className="text-foreground leading-relaxed mb-4 italic">
+                  "At OmniMed Health, we believe that proactive, technology-enabled care management is the future of healthcare. Our mission is to empower providers with the tools and support they need to enhance patient outcomes, reduce hospitalizations, and build sustainable revenue — all while keeping the focus where it belongs: on the patient."
+                </p>
+                <div>
+                  <p className="font-display font-bold text-foreground">Giash Ahmed</p>
+                  <p className="text-sm text-muted-foreground">President & CEO, OmniMed Health</p>
+                </div>
+                <div className="flex flex-wrap gap-4 mt-4 justify-center md:justify-start text-sm text-muted-foreground">
+                  <a href="tel:9177447308" className="flex items-center gap-1.5 hover:text-primary transition-colors">
+                    <HeartHandshake size={14} /> (917) 744-7308
+                  </a>
+                  <a href="mailto:Info@Omnimedhealth.org" className="flex items-center gap-1.5 hover:text-primary transition-colors">
+                    <Plug size={14} /> Info@Omnimedhealth.org
+                  </a>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -275,7 +397,6 @@ const Partner = () => {
                   </motion.div>
                 ) : (
                   <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                    {/* Progress bar */}
                     <div className="mb-8">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-medium text-muted-foreground">Form Progress</span>
