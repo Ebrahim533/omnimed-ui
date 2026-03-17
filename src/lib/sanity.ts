@@ -66,6 +66,68 @@ export const SITE_SETTINGS_QUERY = `
   }
 `;
 
+export const LANDING_PAGE_QUERY = `
+  *[_type == "landingPage"][0] {
+    _id,
+    title,
+    slug,
+    heroSection {
+      headline,
+      subheadline,
+      backgroundImage,
+      ctaButtonText,
+      ctaButtonLink,
+      secondaryCtaText,
+      secondaryCtaLink,
+    },
+    statsSection[] {
+      value,
+      label,
+      icon,
+    },
+    featuredServices[] -> {
+      _id,
+      title,
+      slug,
+      description,
+      icon,
+    },
+    testimonialSection {
+      title,
+      testimonials[] {
+        quote,
+        author,
+        role,
+        avatar,
+      },
+    },
+    cta {
+      title,
+      description,
+      buttonText,
+      buttonLink,
+    },
+    seoTitle,
+    seoDescription,
+  }
+`;
+
+export const SERVICES_QUERY = `
+  *[_type == "service"] | order(order asc) {
+    _id,
+    title,
+    slug,
+    description,
+    fullDescription,
+    icon,
+    features[] {
+      title,
+      description,
+    },
+    order,
+  }
+`;
+
 // Helper function to build image URLs
 export function getSanityImageUrl(image: any, width?: number, height?: number) {
   if (!image) return "";

@@ -7,7 +7,6 @@ import { Zap, Heart, Cpu, Shield, Activity, Smartphone, ArrowRight, Linkedin } f
 import { fadeUp, cardStagger, scaleIn, slideInLeft, slideInRight, viewportOnce, buttonHover, buttonTap, EASE_PROFESSIONAL } from "@/lib/animations";
 import { useTeam, useFeaturedPerson, useSiteSettings } from "@/hooks/useSanity";
 import { urlFor, getSanityImageUrl } from "@/lib/sanity";
-import aboutHero from "@/assets/about-hero.jpg";
 
 // Fallback values when Sanity is not available
 const values = [
@@ -118,7 +117,7 @@ const About = () => {
               transition={{ duration: 0.7, ease: EASE_PROFESSIONAL, delay: 0.2 }}
               className="relative"
             >
-              <div className="rounded-2xl overflow-hidden aspect-square lg:aspect-[4/3]">
+              <div className="rounded-2xl overflow-hidden aspect-square lg:aspect-[4/3] bg-muted flex items-center justify-center">
                 {settings?.aboutImage ? (
                   <img
                     src={urlFor(settings.aboutImage).width(800).height(600).auto("format").url()}
@@ -126,7 +125,10 @@ const About = () => {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <img src={aboutHero} alt="Medical technology visualization" className="w-full h-full object-cover" />
+                  <div className="text-muted-foreground text-center p-6">
+                    <p className="text-sm">About section image</p>
+                    <p className="text-xs mt-1">Add image in Sanity Studio</p>
+                  </div>
                 )}
               </div>
               <div className="absolute -bottom-4 -left-4 w-24 h-24 rounded-2xl bg-primary/10 -z-10" />
@@ -221,7 +223,7 @@ const About = () => {
                   )}
                 </div>
                 <div className="md:col-span-3 p-8 lg:p-12 flex flex-col justify-center space-y-5">
-                  <p className="text-primary font-display font-semibold text-sm tracking-wider uppercase">{featuredPerson.role}</p>
+                  <p className="text-primary font-display font-semibold text-sm tracking-wider uppercase">President & CEO</p>
                   <h3 className="text-2xl lg:text-3xl font-display font-bold text-foreground">{featuredPerson.name}</h3>
                   {featuredPerson.bio && (
                     <blockquote className="text-muted-foreground leading-relaxed border-l-4 border-secondary pl-5 italic">
@@ -292,7 +294,7 @@ const About = () => {
                   </div>
                   <div className="p-5">
                     <h4 className="font-display font-bold text-foreground">{member.name}</h4>
-                    <p className="text-sm text-muted-foreground">{member.role}</p>
+                    <p className="text-sm text-muted-foreground">Team Member</p>
                   </div>
                 </motion.div>
               ))

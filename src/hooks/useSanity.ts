@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { sanityClient, PERSON_QUERY, FEATURED_PERSON_QUERY, SITE_SETTINGS_QUERY } from "@/lib/sanity";
+import { sanityClient, PERSON_QUERY, FEATURED_PERSON_QUERY, SITE_SETTINGS_QUERY, LANDING_PAGE_QUERY, SERVICES_QUERY } from "@/lib/sanity";
 
 export interface SocialLink {
   platform: "linkedin" | "twitter" | "github" | "email";
@@ -29,6 +29,55 @@ export interface SiteSettings {
   contactPhone?: string;
   address?: string;
   companyDescription?: string;
+}
+
+export interface Service {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  description?: string;
+  fullDescription?: any[];
+  icon?: any;
+  features?: Array<{ title: string; description: string }>;
+  order?: number;
+}
+
+export interface LandingPage {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  heroSection?: {
+    headline: string;
+    subheadline?: string;
+    backgroundImage?: any;
+    ctaButtonText?: string;
+    ctaButtonLink?: string;
+    secondaryCtaText?: string;
+    secondaryCtaLink?: string;
+  };
+  statsSection?: Array<{
+    value: string;
+    label: string;
+    icon?: string;
+  }>;
+  featuredServices?: Service[];
+  testimonialSection?: {
+    title?: string;
+    testimonials?: Array<{
+      quote: string;
+      author: string;
+      role: string;
+      avatar?: any;
+    }>;
+  };
+  cta?: {
+    title?: string;
+    description?: string;
+    buttonText?: string;
+    buttonLink?: string;
+  };
+  seoTitle?: string;
+  seoDescription?: string;
 }
 
 // Hook to fetch all people
@@ -104,4 +153,54 @@ export function useSiteSettings() {
   }, []);
 
   return { settings, loading, error };
+}
+
+// Hook to fetch landing page content
+export function useLandingPage() {
+  const [landingPage, setLandingPage] = useState<LandingPage | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchLandingPage() {
+      try {
+        setLoading(true);
+        const data = await sanityClient.fetch<LandingPage>(LANDING_PAGE_QUERY);
+        setLandingPage(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to fetch landing page");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchLandingPage();
+  }, []);
+
+  return { landingPage, loading, error };
+}
+
+// Hook to fetch all services
+export function useServices() {
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchServices() {
+      try {
+        setLoading(true);
+        const data = await sanityClient.fetch<Service[]>(SERVICES_QUERY);
+        setServices(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to fetch services");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchServices();
+  }, []);
+
+  return { services, loading, error };
 }

@@ -8,8 +8,6 @@ import ServiceHighlightStrip from "@/components/ServiceHighlightStrip";
 import { fadeUp, sectionReveal, cardStagger, scaleIn, slideInLeft, slideInRight, viewportOnce, buttonHover, buttonTap } from "@/lib/animations";
 import { useFeaturedPerson, useSiteSettings } from "@/hooks/useSanity";
 import { urlFor } from "@/lib/sanity";
-import ceoPortrait from "@/assets/ceo-portrait.jpg";
-import ceoSignature from "@/assets/ceo-signature.png";
 
 const heroImages = [
   "https://images.pexels.com/photos/7089401/pexels-photo-7089401.jpeg",
@@ -116,23 +114,28 @@ const Index = () => {
           <div className="grid lg:grid-cols-5 gap-10 lg:gap-16 items-center">
             <motion.div initial="hidden" whileInView="visible" viewport={viewportOnce} variants={slideInLeft} className="lg:col-span-2">
               <motion.div
-                className="relative rounded-2xl overflow-hidden aspect-[3/4] max-w-sm mx-auto lg:mx-0 bg-muted"
+                className="relative rounded-2xl overflow-hidden aspect-[3/4] max-w-sm mx-auto lg:mx-0 bg-muted flex items-center justify-center"
                 initial="hidden"
                 whileInView="visible"
                 viewport={viewportOnce}
                 variants={scaleIn}
               >
                 {featuredPerson.image ? (
-                  <img
-                    src={urlFor(featuredPerson.image).width(500).height(650).auto("format").url()}
-                    alt={featuredPerson.name}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+                  <>
+                    <img
+                      src={urlFor(featuredPerson.image).width(500).height(650).auto("format").url()}
+                      alt={featuredPerson.name}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
+                  </>
                 ) : (
-                  <img src={ceoPortrait} alt={featuredPerson.name} className="w-full h-full object-cover" loading="lazy" />
+                  <div className="text-muted-foreground text-center p-6">
+                    <p className="text-sm">Portrait image not available</p>
+                    <p className="text-xs mt-1">Add image in Sanity Studio</p>
+                  </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
               </motion.div>
             </motion.div>
 
