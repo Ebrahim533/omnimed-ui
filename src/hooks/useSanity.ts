@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { sanityClient, PERSON_QUERY, FEATURED_PERSON_QUERY, SITE_SETTINGS_QUERY, LANDING_PAGE_QUERY, SERVICES_QUERY } from "@/lib/sanity";
+import { sanityClient, PERSON_QUERY, FEATURED_PERSON_QUERY, SITE_SETTINGS_QUERY, LANDING_PAGE_QUERY, LANDING_PAGE_BY_SLUG_QUERY, SERVICES_QUERY, ABOUT_PAGE_QUERY } from "@/lib/sanity";
 
 export interface SocialLink {
   platform: "linkedin" | "twitter" | "github" | "email";
@@ -80,6 +80,13 @@ export interface LandingPage {
   seoDescription?: string;
 }
 
+export interface AboutPageData {
+  landing?: LandingPage | null;
+  settings?: SiteSettings | null;
+  services?: Service[];
+  featuredPerson?: Person | null;
+}
+
 // Hook to fetch all people
 export function useTeam() {
   const [team, setTeam] = useState<Person[]>([]);
@@ -156,7 +163,7 @@ export function useSiteSettings() {
 }
 
 // Hook to fetch landing page content
-export function useLandingPage() {
+export function useLandingPage(slug?: string) {
   const [landingPage, setLandingPage] = useState<LandingPage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -165,7 +172,12 @@ export function useLandingPage() {
     async function fetchLandingPage() {
       try {
         setLoading(true);
-        const data = await sanityClient.fetch<LandingPage>(LANDING_PAGE_QUERY);
+        let data: LandingPage | null = null;
+        if (slug) {
+          data = await sanityClient.fetch<LandingPage>(LANDING_PAGE_BY_SLUG_QUERY, { slug });
+        } else {
+          data = await sanityClient.fetch<LandingPage>(LANDING_PAGE_QUERY as any);
+        }
         setLandingPage(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to fetch landing page");
@@ -175,9 +187,34 @@ export function useLandingPage() {
     }
 
     fetchLandingPage();
-  }, []);
+  }, [slug]);
 
   return { landingPage, loading, error };
+}
+
+// Hook to fetch About page aggregated data (landing:about + site settings + services + featured person)
+export function useAboutPage() {
+  const [about, setAbout] = useState<AboutPageData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchAbout() {
+      try {
+        setLoading(true);
+        const data = await sanityClient.fetch<AboutPageData>(ABOUT_PAGE_QUERY as any);
+        setAbout(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to fetch about page data");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchAbout();
+  }, []);
+
+  return { about, loading, error };
 }
 
 // Hook to fetch all services

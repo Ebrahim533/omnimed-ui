@@ -5,33 +5,10 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Zap, Heart, Cpu, Shield, Activity, Smartphone, ArrowRight, Linkedin } from "lucide-react";
 import { fadeUp, cardStagger, scaleIn, slideInLeft, slideInRight, viewportOnce, buttonHover, buttonTap, EASE_PROFESSIONAL } from "@/lib/animations";
-import { useTeam, useFeaturedPerson, useSiteSettings } from "@/hooks/useSanity";
+import { useTeam, useSiteSettings, useAboutPage } from "@/hooks/useSanity";
 import { urlFor, getSanityImageUrl } from "@/lib/sanity";
 
-// Fallback values when Sanity is not available
-const values = [
-  {
-    icon: Zap,
-    title: "Efficiency",
-    desc: "Streamlined workflows and automated processes that reduce administrative burden and let providers focus on what matters most — patients.",
-  },
-  {
-    icon: Heart,
-    title: "Empathy",
-    desc: "Technology should enhance the human connection, not replace it. Every tool we build is designed to deepen the patient-provider relationship.",
-  },
-  {
-    icon: Cpu,
-    title: "Technology",
-    desc: "Cutting-edge AI, real-time data pipelines, and predictive analytics power our platform — transforming raw data into actionable clinical insights.",
-  },
-];
-
-const techNodes = [
-  { icon: Shield, label: "PCM", desc: "Principal Care", x: 0 },
-  { icon: Activity, label: "CCM", desc: "Chronic Care", x: 1 },
-  { icon: Smartphone, label: "RPM", desc: "Remote Monitoring", x: 2 },
-];
+// NOTE: We'll derive most content from Sanity via `useAboutPage`.
 
 // ─── SVG Draw Line Component ───
 
@@ -82,8 +59,30 @@ const SignatureDraw = ({ signatureImage }: { signatureImage?: any }) => {
 
 const About = () => {
   const { team, loading: teamLoading } = useTeam();
-  const { person: featuredPerson, loading: featuredLoading } = useFeaturedPerson();
+  const { about, loading: aboutLoading } = useAboutPage();
   const { settings, loading: settingsLoading } = useSiteSettings();
+
+  const featuredPerson = about?.featuredPerson || null;
+
+  // Values (value cards) — prefer landing.statsSection, fallback to hard-coded
+  const values = about?.landing?.statsSection?.map((s: any, i: number) => ({
+    icon: [Zap, Heart, Cpu][i] || Zap,
+    title: s.label || `Value ${i + 1}`,
+    desc: s.value || "",
+  })) ?? [
+    { icon: Zap, title: "Efficiency", desc: "Streamlined workflows and automated processes that reduce administrative burden and let providers focus on what matters most — patients." },
+    { icon: Heart, title: "Empathy", desc: "Technology should enhance the human connection, not replace it. Every tool we build is designed to deepen the patient-provider relationship." },
+    { icon: Cpu, title: "Technology", desc: "Cutting-edge AI, real-time data pipelines, and predictive analytics power our platform — transforming raw data into actionable clinical insights." },
+  ];
+
+  // Tech nodes — prefer featuredServices from the landing page, fallback to static
+  const featuredServices = about?.landing?.featuredServices;
+  const techNodes = featuredServices && featuredServices.length > 0 ? featuredServices.map((svc: any, i: number) => ({
+    icon: [Shield, Activity, Smartphone][i] || Shield,
+    label: svc.title,
+    desc: svc.description,
+    x: i,
+  })) : [ { icon: Shield, label: "PCM", desc: "Principal Care", x: 0 }, { icon: Activity, label: "CCM", desc: "Chronic Care", x: 1 }, { icon: Smartphone, label: "RPM", desc: "Remote Monitoring", x: 2 } ];
 
   return (
     <Layout>
@@ -96,16 +95,21 @@ const About = () => {
                 About OmniMed
               </motion.p>
               <motion.h1 custom={1} variants={fadeUp} className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-foreground leading-tight">
-                Redefining the{" "}
-                <span className="gradient-text">Standard of Care</span>
+                {about?.landing?.heroSection?.headline ? (
+                  <span dangerouslySetInnerHTML={{ __html: about.landing.heroSection.headline }} />
+                ) : (
+                  <>
+                    Redefining the <span className="gradient-text">Standard of Care</span>
+                  </>
+                )}
               </motion.h1>
               <motion.p custom={2} variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed max-w-lg">
-                OmniMed was founded on a simple belief: healthcare should be proactive, not reactive. We integrate advanced monitoring, data analytics, and compassionate coordination to deliver better outcomes for every patient.
+                {about?.landing?.heroSection?.subheadline || settings?.companyDescription || "OmniMed was founded on a simple belief: healthcare should be proactive, not reactive. We integrate advanced monitoring, data analytics, and compassionate coordination to deliver better outcomes for every patient."}
               </motion.p>
               <motion.div custom={3} variants={fadeUp}>
                 <motion.div whileHover={buttonHover} whileTap={buttonTap} className="inline-block">
                   <Button asChild size="lg" className="rounded-full px-8">
-                    <Link to="/contact">Get in Touch <ArrowRight size={16} className="ml-1" /></Link>
+                    <Link to={about?.landing?.heroSection?.ctaButtonLink || "/contact"}>{about?.landing?.heroSection?.ctaButtonText || "Get in Touch"} <ArrowRight size={16} className="ml-1" /></Link>
                   </Button>
                 </motion.div>
               </motion.div>
@@ -148,12 +152,12 @@ const About = () => {
             variants={fadeUp}
             className="text-center max-w-2xl mx-auto mb-14"
           >
-            <p className="text-primary font-display font-semibold text-sm tracking-wider uppercase mb-3">Our Mission</p>
+            <p className="text-primary font-display font-semibold text-sm tracking-wider uppercase mb-3">{about?.landing?.title || "Our Mission"}</p>
             <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground mb-4">
-              Built on Three Pillars
+              {about?.landing?.title || "Built on Three Pillars"}
             </h2>
             <p className="text-muted-foreground leading-relaxed">
-              Every decision we make is guided by a commitment to efficiency, empathy, and technological excellence.
+              {about?.settings?.companyDescription || "Every decision we make is guided by a commitment to efficiency, empathy, and technological excellence."}
             </p>
           </motion.div>
 
@@ -201,7 +205,7 @@ const About = () => {
           </motion.div>
 
           {/* Featured Person Card */}
-          {!featuredLoading && featuredPerson && (
+          {!aboutLoading && featuredPerson && (
             <motion.div
               initial="hidden"
               whileInView="visible"

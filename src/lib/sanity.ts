@@ -112,6 +112,56 @@ export const LANDING_PAGE_QUERY = `
   }
 `;
 
+export const LANDING_PAGE_BY_SLUG_QUERY = `
+  *[_type == "landingPage" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    heroSection {
+      headline,
+      subheadline,
+      backgroundImage,
+      ctaButtonText,
+      ctaButtonLink,
+      secondaryCtaText,
+      secondaryCtaLink,
+    },
+    statsSection[] { value, label, icon },
+    featuredServices[]-> { _id, title, slug, description, icon },
+    testimonialSection { title, testimonials[] { quote, author, role, avatar } },
+    cta { title, description, buttonText, buttonLink },
+    seoTitle,
+    seoDescription,
+  }
+`;
+
+export const ABOUT_PAGE_QUERY = `
+  {
+    "landing": *[_type == "landingPage" && slug.current == "about"][0] {
+      title,
+      slug,
+      heroSection {
+        headline,
+        subheadline,
+        backgroundImage,
+        ctaButtonText,
+        ctaButtonLink,
+        secondaryCtaText,
+        secondaryCtaLink,
+      },
+      statsSection[] { value, label, icon },
+      featuredServices[]-> { _id, title, slug, description, icon },
+      testimonialSection { title, testimonials[] { quote, author, role, avatar } },
+      cta { title, description, buttonText, buttonLink },
+      seoTitle,
+      seoDescription,
+    },
+    "settings": *[_type == "siteSettings"][0] { title, aboutImage, companyDescription, ceoSignature },
+    "services": *[_type == "service"] | order(order asc) { _id, title, slug, description, icon, features },
+    "featuredPerson": *[_type == "person" && featured == true][0] { _id, name, slug, role, bio, image, social[] { platform, url } }
+  }
+`;
+
 export const SERVICES_QUERY = `
   *[_type == "service"] | order(order asc) {
     _id,

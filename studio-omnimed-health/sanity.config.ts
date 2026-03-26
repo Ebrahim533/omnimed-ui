@@ -1,7 +1,7 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
-import schemas from './schemaTypes'
+import {schemaTypes as schemas} from './schemaTypes'
 
 export default defineConfig({
   name: 'omnimed-ui-studio',
