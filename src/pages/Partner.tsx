@@ -14,7 +14,7 @@ import {
   Plug, ShieldCheck, HeartHandshake, Building2, Cpu, ArrowRight, CheckCircle2, Send,
   Settings, Users, Stethoscope, FileCheck, BarChart3, Quote, TrendingUp, DollarSign, Activity
 } from "lucide-react";
-import { fadeUp, sectionReveal, cardStagger, viewportOnce, buttonHover, buttonTap } from "@/lib/animations";
+import { fadeUp, sectionReveal, cardStagger, viewportOnce, buttonHover, buttonTap, EASE_PROFESSIONAL } from "@/lib/animations";
 import { usePartnerPage } from "@/hooks/useSanity";
 import partnerHero from "@/assets/partner-hero.jpg";
 import ceoPortrait from "@/assets/ceo-portrait.jpg";
@@ -160,6 +160,11 @@ const Partner = () => {
   const [loading, setLoading] = useState(false);
   const { partner, loading: partnerLoading, error: partnerError } = usePartnerPage();
 
+  // Debug logging
+  console.log("Partner data:", partner);
+  console.log("Partner loading:", partnerLoading);
+  console.log("Partner error:", partnerError);
+
   const form = useForm<PartnerFormValues>({
     resolver: zodResolver(partnerSchema),
     defaultValues: { orgName: "", contactPerson: "", email: "", npi: "", patientVolume: "", interest: "" },
@@ -183,6 +188,14 @@ const Partner = () => {
 
   return (
     <Layout>
+      {/* Debug Error Display */}
+      {partnerError && (
+        <div className="bg-red-50 border border-red-200 p-4 m-4 rounded-lg">
+          <p className="text-red-700 font-semibold">Error loading partner page:</p>
+          <p className="text-red-600 text-sm">{partnerError}</p>
+        </div>
+      )}
+
       {/* ── Hero ── */}
       <section className="relative overflow-hidden py-20 lg:py-28">
         <div className="section-container">
@@ -375,17 +388,14 @@ const Partner = () => {
                   </Button>
                 </motion.div>
               </motion.div>
-            </motion.div>
 
-            {/* Right Content - Enhanced Benefits with Floating Cards and Image */}
-            <div className="relative">
-              {/* Main Image Container */}
+              {/* Image Container - Moved below CTA button */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, y: 40 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.8, ease: EASE_PROFESSIONAL }}
-                className="relative mb-8"
+                transition={{ duration: 0.8, ease: EASE_PROFESSIONAL, delay: 0.3 }}
+                className="relative mt-10"
               >
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-primary/10">
                   <motion.div
@@ -517,7 +527,10 @@ const Partner = () => {
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                 />
               </motion.div>
+            </motion.div>
 
+            {/* Right Content - Benefit Cards Only */}
+            <div className="relative">
               {/* Benefit Cards - Floating List */}
               <motion.div
                 initial="hidden"
