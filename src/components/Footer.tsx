@@ -8,7 +8,7 @@ const Footer = () => {
   const companyDesc = settings?.companyDescription || "Proactive, technology-enabled care management for better health outcomes.";
   const phone = settings?.contactPhone || "(917) 744 7308";
   const email = settings?.contactEmail || "info@omnimedhealth.com";
-  const address = settings?.address || "New York, NY 10001";
+  const address = settings?.address || "178-27 Hillside Ave, Jamaica, NY 11432";
 
   return (
     <footer className="bg-foreground text-background/80">

@@ -4,22 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "sanity dev",
-    "start": "sanity dev",
-    "build": "sanity build",
-    "deploy": "sanity deploy"
+    "dev": "npx sanity dev",
+    "start": "npx sanity dev",
+    "build": "npx sanity build",
+    "deploy": "npx sanity deploy"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@sanity/cli": "^5.14.1",
-    "@sanity/structure": "^2.36.2",
-    "@sanity/vision": "^5.14.1",
+    "@sanity/vision": "5.14.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "sanity": "^5.14.1",
+    "sanity": "5.14.1",
     "styled-components": "^6.3.11"
   }
 }

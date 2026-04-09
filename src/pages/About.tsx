@@ -3,12 +3,12 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { Zap, Heart, Cpu, Shield, Activity, Smartphone, ArrowRight, Linkedin } from "lucide-react";
+import { Zap, Heart, Cpu, Shield, Activity, Smartphone, ArrowRight, Linkedin, Sparkles, ChevronRight } from "lucide-react";
 import { fadeUp, cardStagger, scaleIn, slideInLeft, slideInRight, viewportOnce, buttonHover, buttonTap, EASE_PROFESSIONAL } from "@/lib/animations";
 import { useTeam, useSiteSettings, useAboutPage } from "@/hooks/useSanity";
 import { urlFor, getSanityImageUrl } from "@/lib/sanity";
 
-// NOTE: We'll derive most content from Sanity via `useAboutPage`.
+import { EnhancedLeadershipSection } from "@/components/EnhancedLeadershipSection";
 
 // ─── SVG Draw Line Component ───
 
@@ -59,8 +59,14 @@ const SignatureDraw = ({ signatureImage }: { signatureImage?: any }) => {
 
 const About = () => {
   const { team, loading: teamLoading } = useTeam();
-  const { about, loading: aboutLoading } = useAboutPage();
+  const { about, loading: aboutLoading, error: aboutError } = useAboutPage();
   const { settings, loading: settingsLoading } = useSiteSettings();
+
+  // Debug logging
+  console.log("About data:", about);
+  console.log("About landing:", about?.landing);
+  console.log("About aboutSection:", about?.landing?.aboutSection);
+  console.log("About error:", aboutError);
 
   const featuredPerson = about?.featuredPerson || null;
 
@@ -86,57 +92,241 @@ const About = () => {
 
   return (
     <Layout>
-      {/* 1. Hero — "The Vision" */}
-      <section className="py-20 lg:py-28 overflow-hidden">
-        <div className="section-container">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <motion.div initial="hidden" animate="visible" className="space-y-6">
-              <motion.p custom={0} variants={fadeUp} className="text-primary font-display font-semibold text-sm tracking-wider uppercase">
-                About OmniMed
-              </motion.p>
-              <motion.h1 custom={1} variants={fadeUp} className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-foreground leading-tight">
-                {about?.landing?.heroSection?.headline ? (
-                  <span dangerouslySetInnerHTML={{ __html: about.landing.heroSection.headline }} />
+      {/* 1. Hero — "The Vision" - Enhanced with Modern Animations */}
+      <section className="py-20 lg:py-28 overflow-hidden relative">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"
+            animate={{ scale: [1.2, 1, 1.2], opacity: [0.2, 0.4, 0.2] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-primary/3 to-secondary/3 rounded-full blur-3xl"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+          />
+        </div>
+
+        <div className="section-container relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* Left Content - Enhanced Text Animations */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              className="space-y-8"
+            >
+              {/* Animated Label Badge */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 20, scale: 0.8 },
+                  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: EASE_PROFESSIONAL } }
+                }}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full"
+              >
+                <Sparkles className="w-4 h-4 text-primary" />
+                <span className="text-primary font-display font-semibold text-sm tracking-wider uppercase">
+                  {about?.landing?.aboutSection?.label || "About OmniMed"}
+                </span>
+              </motion.div>
+
+              {/* Animated Headline with Character Reveal Effect */}
+              <motion.h1
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: { staggerChildren: 0.03, delayChildren: 0.2 }
+                  }
+                }}
+                className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-foreground leading-tight"
+              >
+                {about?.landing?.aboutSection?.headline ? (
+                  about?.landing?.aboutSection?.highlightedText ? (
+                    <>
+                      {about.landing.aboutSection.headline.split(about.landing.aboutSection.highlightedText).map((part, i) => (
+                        <span key={i}>
+                          <motion.span
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.1, duration: 0.5 }}
+                          >
+                            {part}
+                          </motion.span>
+                          {i === 0 && (
+                            <motion.span
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              whileInView={{ opacity: 1, scale: 1 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: 0.3, duration: 0.6, type: "spring" }}
+                              className="gradient-text inline-block"
+                            >
+                              {about.landing.aboutSection.highlightedText}
+                            </motion.span>
+                          )}
+                        </span>
+                      ))}
+                    </>
+                  ) : (
+                    about.landing.aboutSection.headline
+                  )
                 ) : (
                   <>
                     Redefining the <span className="gradient-text">Standard of Care</span>
                   </>
                 )}
               </motion.h1>
-              <motion.p custom={2} variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed max-w-lg">
-                {about?.landing?.heroSection?.subheadline || settings?.companyDescription || "OmniMed was founded on a simple belief: healthcare should be proactive, not reactive. We integrate advanced monitoring, data analytics, and compassionate coordination to deliver better outcomes for every patient."}
+
+              {/* Animated Description with Fade Up */}
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, duration: 0.6, ease: EASE_PROFESSIONAL }}
+                className="text-lg text-muted-foreground leading-relaxed max-w-lg"
+              >
+                {about?.landing?.aboutSection?.description || settings?.companyDescription || "OmniMed was founded on a simple belief: healthcare should be proactive, not reactive. We integrate advanced monitoring, data analytics, and compassionate coordination to deliver better outcomes for every patient."}
               </motion.p>
-              <motion.div custom={3} variants={fadeUp}>
-                <motion.div whileHover={buttonHover} whileTap={buttonTap} className="inline-block">
-                  <Button asChild size="lg" className="rounded-full px-8">
-                    <Link to={about?.landing?.heroSection?.ctaButtonLink || "/contact"}>{about?.landing?.heroSection?.ctaButtonText || "Get in Touch"} <ArrowRight size={16} className="ml-1" /></Link>
+
+              {/* Animated CTA Button with Glow Effect */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+              >
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-block"
+                >
+                  <Button
+                    asChild
+                    size="lg"
+                    className="rounded-full px-8 bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-shadow duration-300 group"
+                  >
+                    <Link to={about?.landing?.aboutSection?.ctaButtonLink || "/contact"}>
+                      {about?.landing?.aboutSection?.ctaButtonText || "Get in Touch"}
+                      <motion.span
+                        className="inline-block ml-2"
+                        initial={{ x: 0 }}
+                        whileHover={{ x: 5 }}
+                      >
+                        <ChevronRight size={18} />
+                      </motion.span>
+                    </Link>
                   </Button>
                 </motion.div>
               </motion.div>
             </motion.div>
 
+            {/* Right Content - Enhanced Image with Floating Animations */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, x: 40 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              transition={{ duration: 0.7, ease: EASE_PROFESSIONAL, delay: 0.2 }}
+              initial={{ opacity: 0, scale: 0.8, rotateY: -10 }}
+              whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: EASE_PROFESSIONAL, delay: 0.2 }}
               className="relative"
             >
-              <div className="rounded-2xl overflow-hidden aspect-square lg:aspect-[4/3] bg-muted flex items-center justify-center">
-                {settings?.aboutImage ? (
+              {/* Main Image Container with Hover Effects */}
+              <motion.div
+                className="rounded-3xl overflow-hidden aspect-square lg:aspect-[4/3] bg-gradient-to-br from-muted to-muted/50 shadow-2xl shadow-primary/10"
+                whileHover={{ scale: 1.02, rotateY: 5 }}
+                transition={{ duration: 0.4 }}
+              >
+                {about?.landing?.aboutSection?.image?.asset?.url ? (
+                  <motion.img
+                    src={about.landing.aboutSection.image.asset.url}
+                    alt={about?.landing?.aboutSection?.headline || "About OmniMed"}
+                    className="w-full h-full object-cover"
+                    initial={{ scale: 1.2 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, ease: EASE_PROFESSIONAL }}
+                  />
+                ) : about?.landing?.aboutSection?.image ? (
+                  <img
+                    src={urlFor(about.landing.aboutSection.image).width(800).height(600).auto("format").url()}
+                    alt={about?.landing?.aboutSection?.headline || "About OmniMed"}
+                    className="w-full h-full object-cover"
+                  />
+                ) : settings?.aboutImage ? (
                   <img
                     src={urlFor(settings.aboutImage).width(800).height(600).auto("format").url()}
                     alt="Medical technology visualization"
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="text-muted-foreground text-center p-6">
+                  <div className="text-muted-foreground text-center p-6 flex flex-col items-center justify-center h-full">
+                    <motion.div
+                      animate={{ rotate: [0, 10, -10, 0] }}
+                      transition={{ duration: 4, repeat: Infinity }}
+                    >
+                      <Sparkles className="w-12 h-12 text-primary/30 mb-4" />
+                    </motion.div>
                     <p className="text-sm">About section image</p>
-                    <p className="text-xs mt-1">Add image in Sanity Studio</p>
+                    <p className="text-xs mt-1 text-muted-foreground/60">Add image in Sanity Studio</p>
                   </div>
                 )}
-              </div>
-              <div className="absolute -bottom-4 -left-4 w-24 h-24 rounded-2xl bg-primary/10 -z-10" />
-              <div className="absolute -top-4 -right-4 w-16 h-16 rounded-xl bg-secondary/10 -z-10" />
+
+                {/* Overlay Gradient on Hover */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500"
+                />
+              </motion.div>
+
+              {/* Floating Decorative Elements */}
+              <motion.div
+                className="absolute -bottom-6 -left-6 w-32 h-32 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 -z-10 backdrop-blur-sm border border-primary/10"
+                animate={{
+                  y: [0, -10, 0],
+                  rotate: [0, 5, 0],
+                }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute -top-6 -right-6 w-24 h-24 rounded-xl bg-gradient-to-br from-secondary/20 to-secondary/5 -z-10 backdrop-blur-sm border border-secondary/10"
+                animate={{
+                  y: [0, 10, 0],
+                  rotate: [0, -5, 0],
+                }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              />
+              <motion.div
+                className="absolute top-1/2 -right-12 w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400/20 to-orange-400/10 -z-10"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.5, 0.8, 0.5],
+                }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              />
+
+              {/* Stats Badge - Floating */}
+              <motion.div
+                className="absolute -bottom-4 left-8 bg-white rounded-2xl shadow-xl shadow-primary/10 p-4 border border-primary/5"
+                initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.6, duration: 0.5, type: "spring" }}
+                whileHover={{ y: -5, scale: 1.05 }}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Heart className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-lg font-bold text-foreground">15+</p>
+                    <p className="text-xs text-muted-foreground">Years of Care</p>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
@@ -185,129 +375,13 @@ const About = () => {
         </div>
       </section>
 
-      {/* 3. Leadership & Team */}
-      <section className="py-20 lg:py-28">
-        <div className="section-container">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={viewportOnce}
-            variants={fadeUp}
-            className="text-center max-w-2xl mx-auto mb-14"
-          >
-            <p className="text-primary font-display font-semibold text-sm tracking-wider uppercase mb-3">Leadership</p>
-            <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground mb-4">
-              The People Behind the Platform
-            </h2>
-            <p className="text-muted-foreground leading-relaxed">
-              Our team combines decades of healthcare, technology, and operational expertise.
-            </p>
-          </motion.div>
-
-          {/* Featured Person Card */}
-          {!aboutLoading && featuredPerson && (
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewportOnce}
-              variants={scaleIn}
-              className="card-elevated rounded-2xl overflow-hidden mb-12"
-            >
-              <div className="grid md:grid-cols-5 gap-0">
-                <div className="md:col-span-2">
-                  {featuredPerson.image ? (
-                    <img
-                      src={urlFor(featuredPerson.image).width(500).height(500).auto("format").url()}
-                      alt={featuredPerson.name}
-                      className="w-full h-full object-cover aspect-square md:aspect-auto"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-muted flex items-center justify-center">No image</div>
-                  )}
-                </div>
-                <div className="md:col-span-3 p-8 lg:p-12 flex flex-col justify-center space-y-5">
-                  <p className="text-primary font-display font-semibold text-sm tracking-wider uppercase">President & CEO</p>
-                  <h3 className="text-2xl lg:text-3xl font-display font-bold text-foreground">{featuredPerson.name}</h3>
-                  {featuredPerson.bio && (
-                    <blockquote className="text-muted-foreground leading-relaxed border-l-4 border-secondary pl-5 italic">
-                      "{featuredPerson.bio}"
-                    </blockquote>
-                  )}
-                  <div className="flex items-center gap-4 pt-2">
-                    {settings?.ceoSignature && <SignatureDraw signatureImage={settings.ceoSignature} />}
-                    {featuredPerson.social?.map((link) => (
-                      <a
-                        key={link.platform}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center hover:bg-primary/20 transition-colors"
-                        aria-label={link.platform}
-                      >
-                        <Linkedin size={16} className="text-primary" />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Team Grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {teamLoading ? (
-              <div className="col-span-full text-center py-8">Loading team members...</div>
-            ) : team && team.length > 0 ? (
-              team.filter(member => !member.featured).map((member, i) => (
-                <motion.div
-                  key={member._id}
-                  custom={i}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={viewportOnce}
-                  variants={cardStagger}
-                  className="group relative rounded-2xl overflow-hidden card-elevated"
-                >
-                  <div className="aspect-[3/4] overflow-hidden bg-muted">
-                    {member.image ? (
-                      <img
-                        src={urlFor(member.image).width(400).height(500).auto("format").url()}
-                        alt={member.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-muted-foreground">No image</div>
-                    )}
-                    {/* Hover overlay */}
-                    <div className="absolute inset-0 bg-foreground/70 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col justify-end p-6">
-                      <p className="text-background text-sm leading-relaxed mb-3">{member.bio}</p>
-                      {member.social && member.social.length > 0 && (
-                        <a
-                          href={member.social[0].url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-8 h-8 rounded-lg bg-background/20 flex items-center justify-center hover:bg-background/30 transition-colors"
-                          aria-label={`${member.name}'s ${member.social[0].platform}`}
-                        >
-                          <Linkedin size={14} className="text-background" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                  <div className="p-5">
-                    <h4 className="font-display font-bold text-foreground">{member.name}</h4>
-                    <p className="text-sm text-muted-foreground">Team Member</p>
-                  </div>
-                </motion.div>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-8 text-muted-foreground">No team members available</div>
-            )}
-          </div>
-        </div>
-      </section>
+      {/* 3. Leadership & Team - Enhanced */}
+      <EnhancedLeadershipSection 
+        featuredPerson={featuredPerson}
+        team={team || []}
+        settings={settings}
+        loading={aboutLoading || teamLoading}
+      />
 
       {/* 4. Technology Integration — "The OmniMed Difference" */}
       <section className="py-20 lg:py-28 surface-tint">

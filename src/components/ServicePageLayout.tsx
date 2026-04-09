@@ -4,7 +4,7 @@ import Layout from "@/components/Layout";
 import StickyContactBar from "@/components/StickyContactBar";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ArrowRight, CheckCircle2, Phone, Mail, Stethoscope, Activity, Smartphone, type LucideIcon } from "lucide-react";
+import { ArrowRight, CheckCircle2, Phone, Mail, Stethoscope, Activity, Smartphone, Calendar, FileText, PhoneCall, Folder, type LucideIcon } from "lucide-react";
 import { fadeUp, viewportOnce, buttonHover, buttonTap, EASE_PROFESSIONAL } from "@/lib/animations";
 
 /* ─── Types ─── */
@@ -16,6 +16,7 @@ interface ServicePageProps {
   heroStats: { value: string; label: string }[];
   featureHighlights: string[];
   howItWorksSteps: string[];
+  howItWorksImage?: string;
   supportItems: { title: string; description: string }[];
   includedItems: { title: string; content: string }[];
   ctaLabel: string;
@@ -37,6 +38,7 @@ const ServicePageLayout = ({
   heroStats,
   featureHighlights,
   howItWorksSteps,
+  howItWorksImage,
   supportItems,
   includedItems,
   ctaLabel,
@@ -188,31 +190,192 @@ const ServicePageLayout = ({
               {/* Divider */}
               <hr className="border-border" />
 
-              {/* How It Works */}
+              {/* How It Works - Enhanced with Image */}
               {howItWorksSteps.length > 0 && (
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-display font-bold text-foreground mb-6">
+                <div className="relative">
+                  <motion.h3 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={viewportOnce}
+                    transition={{ duration: 0.5, ease: EASE_PROFESSIONAL }}
+                    className="text-2xl sm:text-3xl font-display font-bold text-foreground mb-8"
+                  >
                     How Our {label} Works
-                  </h3>
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {howItWorksSteps.map((step, i) => (
+                  </motion.h3>
+                  
+                  <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                    {/* Image Column */}
+                    {howItWorksImage && (
                       <motion.div
-                        key={step}
-                        initial={{ opacity: 0, y: 15 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, x: -30, scale: 0.95 }}
+                        whileInView={{ opacity: 1, x: 0, scale: 1 }}
                         viewport={viewportOnce}
-                        transition={{ delay: i * 0.1, duration: 0.4, ease: EASE_PROFESSIONAL }}
-                        className="flex items-start gap-3 p-4 rounded-xl bg-muted/50 border border-border/50"
+                        transition={{ duration: 0.7, ease: EASE_PROFESSIONAL }}
+                        className="relative order-2 lg:order-1"
                       >
-                        <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold shrink-0 mt-0.5">
-                          {i + 1}
+                        <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                          <motion.img
+                            src={howItWorksImage}
+                            alt={`${label} Process`}
+                            className="w-full h-64 lg:h-80 object-cover"
+                            whileHover={{ scale: 1.03 }}
+                            transition={{ duration: 0.4 }}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent" />
                         </div>
-                        <span className="text-sm text-foreground font-medium leading-relaxed pt-1">{step}</span>
+                        
+                        {/* Floating decorative elements */}
+                        <motion.div
+                          animate={{ y: [-6, 6, -6], rotate: [-3, 3, -3] }}
+                          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                          className="absolute -top-4 -left-4 w-20 h-20 bg-primary/10 rounded-full blur-xl"
+                        />
+                        <motion.div
+                          animate={{ y: [6, -6, 6], rotate: [3, -3, 3] }}
+                          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                          className="absolute -bottom-4 -right-4 w-24 h-24 bg-secondary/10 rounded-full blur-xl"
+                        />
                       </motion.div>
-                    ))}
+                    )}
+                    
+                    {/* Steps Column */}
+                    <div className={`space-y-4 ${howItWorksImage ? 'order-1 lg:order-2' : ''}`}>
+                      {howItWorksSteps.map((step, i) => (
+                        <motion.div
+                          key={step}
+                          initial={{ opacity: 0, x: 30 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={viewportOnce}
+                          transition={{ delay: i * 0.15, duration: 0.5, ease: EASE_PROFESSIONAL }}
+                          whileHover={{ x: 8, transition: { duration: 0.2 } }}
+                          className="group flex items-start gap-4 p-5 rounded-xl bg-gradient-to-r from-card to-card/80 border border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-300"
+                        >
+                          {/* Animated Step Number */}
+                          <div className="relative">
+                            <motion.div
+                              className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-primary-foreground font-bold text-lg shadow-lg shadow-primary/25"
+                              whileHover={{ scale: 1.1, rotate: 5 }}
+                              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                            >
+                              {i + 1}
+                            </motion.div>
+                            
+                            {/* Connection line between steps (except for last) */}
+                            {i < howItWorksSteps.length - 1 && (
+                              <motion.div
+                                initial={{ scaleY: 0 }}
+                                whileInView={{ scaleY: 1 }}
+                                viewport={viewportOnce}
+                                transition={{ delay: i * 0.15 + 0.3, duration: 0.4 }}
+                                className="absolute top-full left-1/2 -translate-x-1/2 w-0.5 h-6 bg-gradient-to-b from-primary to-transparent origin-top"
+                              />
+                            )}
+                          </div>
+                          
+                          {/* Step Content */}
+                          <div className="flex-1 pt-1">
+                            <p className="text-foreground font-medium leading-relaxed group-hover:text-primary transition-colors">
+                              {step}
+                            </p>
+                          </div>
+                          
+                          {/* Hover indicator */}
+                          <motion.div
+                            initial={{ opacity: 0, x: -10 }}
+                            whileHover={{ opacity: 1, x: 0 }}
+                            className="opacity-0 group-hover:opacity-100 transition-opacity"
+                          >
+                            <ArrowRight className="text-primary" size={20} />
+                          </motion.div>
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
+
+              {/* Divider */}
+              <hr className="border-border" />
+
+              {/* Consultation Cards Section */}
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOnce}
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+                }}
+                className="grid sm:grid-cols-3 gap-6"
+              >
+                {/* Schedule Consultation Card */}
+                <motion.div
+                  variants={fadeUp}
+                  className="bg-white rounded-2xl p-8 border-2 border-primary shadow-lg shadow-primary/10 text-center"
+                >
+                  <h4 className="text-xl font-display font-bold text-foreground mb-3">Schedule Consultation</h4>
+                  <p className="text-muted-foreground text-sm mb-6 leading-relaxed">Book a free consultation to learn how our care management programs can help your practice</p>
+                  <motion.div whileHover={buttonHover} whileTap={buttonTap}>
+                    <Button
+                      asChild
+                      size="lg"
+                      className="rounded-full px-8 bg-primary text-white hover:bg-primary/90 shadow-lg"
+                    >
+                      <Link to="/contact">
+                        Book Appointment
+                        <ArrowRight size={18} className="ml-2" />
+                      </Link>
+                    </Button>
+                  </motion.div>
+                  <p className="text-xs text-muted-foreground mt-4">Free 30-minute consultation</p>
+                </motion.div>
+
+                {/* Speak With Us Card */}
+                <motion.div
+                  variants={fadeUp}
+                  className="bg-white rounded-2xl p-8 border border-border shadow-sm text-center"
+                >
+                  <h4 className="text-xl font-display font-bold text-foreground mb-3">Speak With Us</h4>
+                  <p className="text-muted-foreground text-sm mb-6 leading-relaxed">Have questions? Call us to discuss PCM, CCM, RPM and how we can support your patients</p>
+                  <motion.div whileHover={buttonHover} whileTap={buttonTap}>
+                    <Button
+                      asChild
+                      size="lg"
+                      variant="outline"
+                      className="rounded-full px-8 border-primary text-primary hover:bg-primary/10"
+                    >
+                      <a href="tel:9177447308">
+                        <Phone size={18} className="mr-2" />
+                        Get Call
+                      </a>
+                    </Button>
+                  </motion.div>
+                  <p className="text-xs text-muted-foreground mt-4">(917) 744-7308</p>
+                </motion.div>
+
+                {/* View Services Card */}
+                <motion.div
+                  variants={fadeUp}
+                  className="bg-white rounded-2xl p-8 border border-border shadow-sm text-center"
+                >
+                  <h4 className="text-xl font-display font-bold text-foreground mb-3">Explore Our Services</h4>
+                  <p className="text-muted-foreground text-sm mb-6 leading-relaxed">Learn about Principal Care, Chronic Care Management, and Remote Patient Monitoring</p>
+                  <motion.div whileHover={buttonHover} whileTap={buttonTap}>
+                    <Button
+                      asChild
+                      size="lg"
+                      variant="outline"
+                      className="rounded-full px-8 border-foreground text-foreground hover:bg-foreground hover:text-background"
+                    >
+                      <Link to="/services">
+                        Our Service
+                        <ArrowRight size={18} className="ml-2" />
+                      </Link>
+                    </Button>
+                  </motion.div>
+                  <p className="text-xs text-muted-foreground mt-4">PCM • CCM • RPM</p>
+                </motion.div>
+              </motion.div>
 
               {/* Divider */}
               <hr className="border-border" />

@@ -10,21 +10,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, ExternalLink } from "lucide-react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
 import { fadeUp, sectionReveal, blurReveal, slideInRight, viewportOnce, buttonHover, buttonTap } from "@/lib/animations";
 
-const icon = L.icon({
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-});
-
-const OFFICE_LAT = 40.7128;
-const OFFICE_LNG = -74.006;
+const OFFICE_ADDRESS = "178-27 Hillside Ave, Jamaica, NY 11432";
+const DIRECTIONS_URL = "https://www.google.com/maps/dir/?api=1&destination=178-27+Hillside+Ave,Jamaica,NY+11432";
+const MAP_EMBED_URL = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.4!2d-73.7847!3d40.7128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2618f7f6a1b7d%3A0x4b6d8a3b2c5e1f0a!2s178-27%20Hillside%20Ave%2C%20Jamaica%2C%20NY%2011432!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus";
 
 const contactSchema = z.object({
   fullName: z.string().trim().min(1, "Full name is required").max(100, "Name must be less than 100 characters"),
@@ -39,7 +29,7 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 const contactInfo = [
   { icon: Phone, label: "Phone", value: "(917) 744 7308", verified: true },
   { icon: Mail, label: "Email", value: "info@omnimedhealth.com" },
-  { icon: MapPin, label: "Address", value: "New York, NY 10001" },
+  { icon: MapPin, label: "Address", value: "178-27 Hillside Ave, Jamaica, NY 11432" },
   { icon: Clock, label: "Office Hours", value: "Mon–Fri: 8am–6pm EST" },
 ];
 
@@ -70,7 +60,7 @@ const Contact = () => {
     }, 1200);
   };
 
-  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${OFFICE_LAT},${OFFICE_LNG}`;
+  const directionsUrl = DIRECTIONS_URL;
 
   return (
     <Layout>
@@ -102,7 +92,7 @@ const Contact = () => {
                 ))}
               </div>
 
-              {/* Map with blur reveal */}
+              {/* Google Map with blur reveal */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -111,12 +101,17 @@ const Contact = () => {
                 className="card-elevated overflow-hidden rounded-2xl"
                 style={{ height: 300 }}
               >
-                <MapContainer center={[OFFICE_LAT, OFFICE_LNG]} zoom={14} style={{ height: "100%", width: "100%" }} scrollWheelZoom={false}>
-                  <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>' url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
-                  <Marker position={[OFFICE_LAT, OFFICE_LNG]} icon={icon}>
-                    <Popup><strong>OmniMed HQ</strong><br />123 Healthcare Ave, Suite 100</Popup>
-                  </Marker>
-                </MapContainer>
+                <iframe
+                  src={MAP_EMBED_URL}
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="OmniMed Office Location"
+                  className="rounded-2xl"
+                />
               </motion.div>
 
               <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={viewportOnce} transition={{ delay: 0.4 }}>

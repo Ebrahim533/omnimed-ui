@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { sanityClient, PERSON_QUERY, FEATURED_PERSON_QUERY, SITE_SETTINGS_QUERY, LANDING_PAGE_QUERY, LANDING_PAGE_BY_SLUG_QUERY, SERVICES_QUERY, ABOUT_PAGE_QUERY } from "@/lib/sanity";
+import { sanityClient, PERSON_QUERY, FEATURED_PERSON_QUERY, SITE_SETTINGS_QUERY, LANDING_PAGE_QUERY, LANDING_PAGE_BY_SLUG_QUERY, SERVICES_QUERY, ABOUT_PAGE_QUERY, SERVICE_PAGE_QUERY, PARTNER_PAGE_QUERY } from "@/lib/sanity";
 
 export interface SocialLink {
   platform: "linkedin" | "twitter" | "github" | "email";
@@ -15,6 +15,35 @@ export interface Person {
   image?: any;
   social?: SocialLink[];
   featured?: boolean;
+}
+
+export interface ServicePage {
+  _id: string;
+  label: string;
+  slug: { current: string };
+  headline: string;
+  subheadline: string;
+  heroImage?: any;
+  heroStats?: Array<{
+    value: string;
+    label: string;
+  }>;
+  featureHighlights?: string[];
+  howItWorksSteps?: string[];
+  howItWorksImage?: any;
+  supportItems?: Array<{
+    title: string;
+    description: string;
+  }>;
+  includedItems?: Array<{
+    title: string;
+    content: string;
+  }>;
+  ctaLabel?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  ogImage?: any;
+  publishedAt?: string;
 }
 
 export interface SiteSettings {
@@ -217,6 +246,31 @@ export function useAboutPage() {
   return { about, loading, error };
 }
 
+// Hook to fetch Partner page aggregated data
+export function usePartnerPage() {
+  const [partner, setPartner] = useState<{ landing: any; settings: any } | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchPartner() {
+      try {
+        setLoading(true);
+        const data = await sanityClient.fetch(PARTNER_PAGE_QUERY as any);
+        setPartner(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to fetch partner page data");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchPartner();
+  }, []);
+
+  return { partner, loading, error };
+}
+
 // Hook to fetch all services
 export function useServices() {
   const [services, setServices] = useState<Service[]>([]);
@@ -240,4 +294,46 @@ export function useServices() {
   }, []);
 
   return { services, loading, error };
+}
+
+// Hook to fetch a service page by slug
+export function useServicePage(slug: string) {
+  const [servicePage, setServicePage] = useState<ServicePage | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchServicePage() {
+      if (!slug) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError(null);
+        console.log(`[useServicePage] Fetching slug: "${slug}"`);
+        console.log(`[useServicePage] Query:`, SERVICE_PAGE_QUERY);
+        
+        const data = await sanityClient.fetch<ServicePage>(SERVICE_PAGE_QUERY, { slug });
+        
+        console.log(`[useServicePage] Response for "${slug}":`, data);
+        
+        if (!data) {
+          console.warn(`[useServicePage] No document found for slug: "${slug}"`);
+        }
+        
+        setServicePage(data);
+      } catch (err) {
+        console.error(`[useServicePage] Error fetching "${slug}":`, err);
+        setError(err instanceof Error ? err.message : "Failed to fetch service page");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchServicePage();
+  }, [slug]);
+
+  return { servicePage, loading, error };
 }
