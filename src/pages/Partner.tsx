@@ -3,7 +3,6 @@ import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -187,7 +186,7 @@ const Partner = () => {
   };
 
   return (
-    <Layout>
+    <>
       {/* Debug Error Display */}
       {partnerError && (
         <div className="bg-red-50 border border-red-200 p-4 m-4 rounded-lg">
@@ -877,7 +876,7 @@ const Partner = () => {
           </motion.div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

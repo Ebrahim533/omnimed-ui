@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Users, TrendingUp, Clock, Shield, Linkedin, Phone, ChevronRight, ChevronLeft, Stethoscope, HeartPulse, Activity, Play, Star, ShieldCheck, Clock3, FileText, Calendar, PhoneCall, Folder } from "lucide-react";
-import Layout from "@/components/Layout";
 import ServiceHighlightStrip from "@/components/ServiceHighlightStrip";
 import ServiceTrilogy from "@/components/ServiceTrilogy";
 import { fadeUp, sectionReveal, cardStagger, scaleIn, slideInLeft, slideInRight, viewportOnce, buttonHover, buttonTap, EASE_PROFESSIONAL } from "@/lib/animations";
@@ -152,7 +151,7 @@ const Index = () => {
   }, [currentSlide, isAutoPlaying]);
 
   return (
-    <Layout>
+    <>
       {/* Error Display */}
       {hookError && (
         <div className="bg-red-50 border border-red-200 p-4 m-4 rounded-lg">
@@ -683,7 +682,7 @@ const Index = () => {
               </Button>
             </motion.div>
             <motion.div whileHover={buttonHover} whileTap={buttonTap}>
-              <Button asChild size="lg" variant="outline" className="rounded-full px-8 border-background/30 text-background hover:bg-background/10">
+              <Button asChild size="lg" variant="outline" className="rounded-full px-8 border-background/50 text-white hover:bg-white/10 hover:text-white">
                 <Link to="/contact">Contact Us</Link>
               </Button>
             </motion.div>
@@ -691,7 +690,7 @@ const Index = () => {
         </motion.div>
       </div>
     </section>
-    </Layout>
+    </>
   );
 };
 

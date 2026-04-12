@@ -1,7 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Zap, Heart, Cpu, Shield, Activity, Smartphone, ArrowRight, Linkedin, Sparkles, ChevronRight } from "lucide-react";
 import { fadeUp, cardStagger, scaleIn, slideInLeft, slideInRight, viewportOnce, buttonHover, buttonTap, EASE_PROFESSIONAL } from "@/lib/animations";
@@ -91,7 +90,7 @@ const About = () => {
   })) : [ { icon: Shield, label: "PCM", desc: "Principal Care", x: 0 }, { icon: Activity, label: "CCM", desc: "Chronic Care", x: 1 }, { icon: Smartphone, label: "RPM", desc: "Remote Monitoring", x: 2 } ];
 
   return (
-    <Layout>
+    <>
       {/* 1. Hero — "The Vision" - Enhanced with Modern Animations */}
       <section className="py-20 lg:py-28 overflow-hidden relative">
         {/* Animated Background Elements */}
@@ -482,7 +481,7 @@ const About = () => {
           </motion.div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

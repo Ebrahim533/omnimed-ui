@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { format } from "date-fns";
-import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -139,7 +138,7 @@ const Appointment = () => {
   };
 
   return (
-    <Layout>
+    <>
       <section className="py-16 lg:py-24 bg-gradient-to-b from-slate-50 to-white min-h-screen">
         <div className="section-container max-w-4xl mx-auto">
           <AnimatePresence mode="wait">
@@ -471,7 +470,7 @@ const Appointment = () => {
           </AnimatePresence>
         </div>
       </section>
-    </Layout>
+    </>
   );
 };
 

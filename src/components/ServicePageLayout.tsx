@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
-import Layout from "@/components/Layout";
 import StickyContactBar from "@/components/StickyContactBar";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -46,7 +45,7 @@ const ServicePageLayout = ({
   const { pathname } = useLocation();
 
   return (
-    <Layout>
+    <>
       {/* ── Breadcrumb Hero Banner ── */}
       <section className="relative overflow-hidden text-primary-foreground py-16 lg:py-20">
         <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-secondary" />
@@ -456,7 +455,7 @@ const ServicePageLayout = ({
       </section>
 
       <StickyContactBar />
-    </Layout>
+    </>
   );
 };
 
